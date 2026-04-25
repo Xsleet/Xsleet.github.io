@@ -7,10 +7,6 @@
   <meta name="description" content="Yu Xue (薛宇) — Ph.D. Candidate at Beihang University. Research on GNSS integrity monitoring, LEO constellation timescale, and precise time metrology." />
   <meta name="author" content="Yu Xue" />
 
-  <meta property="og:title" content="Yu Xue · Academic Homepage" />
-  <meta property="og:description" content="Ph.D. Candidate at Beihang University — GNSS, LEO timescale, precise time metrology." />
-  <meta property="og:type" content="website" />
-
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛰️%3C/text%3E%3C/svg%3E" />
   <link rel="stylesheet" href="assets/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -19,132 +15,113 @@
 </head>
 <body>
 
-<!-- =========================  NAV  ========================= -->
+<!-- =========================  TOP NAV  ========================= -->
 <nav class="nav">
   <div class="nav-inner">
-    <a href="#hero" class="nav-brand">Yu Xue <span class="dot">·</span> 薛宇</a>
-    <ul class="nav-links">
-      <li><a href="#news">News</a></li>
-      <li><a href="#research">Research</a></li>
-      <li><a href="#publications">Publications</a></li>
-      <li><a href="#patents">Patents</a></li>
-      <li><a href="#honors">Honors</a></li>
-      <li><a href="#education">Education</a></li>
-    </ul>
-    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme"></button>
+    <a href="#top" class="nav-brand">Yu Xue <span class="dot">·</span> 薛宇</a>
+    <ul class="nav-links" id="nav-links"></ul>
+    <div class="nav-actions">
+      <button id="lang-toggle" class="icon-btn lang-toggle" aria-label="Toggle language">中</button>
+      <button id="theme-toggle" class="icon-btn theme-toggle" aria-label="Toggle theme"></button>
+    </div>
   </div>
 </nav>
 
-<main>
+<!-- =========================  TWO-COLUMN LAYOUT  ========================= -->
+<div class="layout" id="top">
 
-<!-- =========================  HERO  ========================= -->
-<section id="hero">
-  <div class="container">
-    <div class="hero">
-      <div class="hero-photo">
-        <img id="hero-photo" src="" alt="" />
-      </div>
-      <div class="hero-info">
-        <h1 id="hero-name"></h1>
-        <div class="hero-title" id="hero-title"></div>
-        <div class="hero-affil" id="hero-affil"></div>
-        <div class="hero-bio" id="hero-bio"></div>
-        <div class="hero-links" id="hero-links"></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- =========================  NEWS  ========================= -->
-<section id="news" class="reveal">
-  <div class="container">
-    <h2 class="section-title"><span class="hash">#</span> News &amp; Updates</h2>
-    <div class="news-list" id="news-list"></div>
-    <button class="news-toggle-btn" id="news-toggle">Show all</button>
-  </div>
-</section>
-
-<!-- =========================  RESEARCH  ========================= -->
-<section id="research" class="reveal">
-  <div class="container">
-    <h2 class="section-title"><span class="hash">#</span> Research Interests</h2>
-    <div class="research-grid" id="research-grid"></div>
-  </div>
-</section>
-
-<!-- =========================  PUBLICATIONS  ========================= -->
-<section id="publications" class="reveal">
-  <div class="container">
-    <h2 class="section-title"><span class="hash">#</span> Publications</h2>
-
-    <div class="pub-filter">
-      <div class="filter-group">
-        <span class="filter-group-label">Year</span>
-        <div id="pub-filter-year" style="display:flex;gap:6px;flex-wrap:wrap"></div>
-      </div>
-      <div class="filter-group">
-        <span class="filter-group-label">Role</span>
-        <div id="pub-filter-role" style="display:flex;gap:6px;flex-wrap:wrap"></div>
-      </div>
+  <!-- ===== Sidebar (sticky, always visible) ===== -->
+  <aside class="sidebar">
+    <div class="sidebar-photo">
+      <img id="profile-photo" src="" alt="Yu Xue" />
     </div>
 
-    <div class="pub-list" id="pub-list"></div>
-  </div>
-</section>
+    <div>
+      <div class="sidebar-name">
+        <span id="profile-name-en">Yu Xue</span>
+        <span class="cn" id="profile-name-cn">薛宇</span>
+      </div>
+      <div class="sidebar-position" id="profile-position"></div>
+      <div class="sidebar-affil" id="profile-affil"></div>
+    </div>
 
-<!-- =========================  PATENTS & SOFTWARE  ========================= -->
-<section id="patents" class="reveal">
-  <div class="container">
-    <h2 class="section-title"><span class="hash">#</span> Patents &amp; Software</h2>
+    <div>
+      <div class="sidebar-lab" id="profile-lab"></div>
+      <div class="sidebar-advisor" id="profile-advisor"></div>
+    </div>
 
-    <div class="two-col">
-      <div>
-        <div class="subsection-title">
-          Invention Patents <span class="count" id="patent-count"></span>
+    <div class="sidebar-bio" id="profile-bio"></div>
+
+    <div class="sidebar-contact" id="profile-contact"></div>
+  </aside>
+
+  <!-- ===== Main Content (right column) ===== -->
+  <main class="main-content">
+
+    <section id="news" class="reveal">
+      <h2 class="section-title"><span class="hash">#</span> <span data-i18n="section.news"></span></h2>
+      <div class="news-list" id="news-list"></div>
+      <button class="news-toggle-btn" id="news-toggle"></button>
+    </section>
+
+    <section id="research" class="reveal">
+      <h2 class="section-title"><span class="hash">#</span> <span data-i18n="section.research"></span></h2>
+      <div class="research-grid" id="research-grid"></div>
+    </section>
+
+    <section id="publications" class="reveal">
+      <h2 class="section-title"><span class="hash">#</span> <span data-i18n="section.pubs"></span></h2>
+      <div class="pub-filter">
+        <div class="filter-group">
+          <span class="filter-group-label" data-i18n="pubs.year"></span>
+          <div id="pub-filter-year" style="display:flex;gap:6px;flex-wrap:wrap"></div>
         </div>
-        <div class="ip-list" id="patent-list"></div>
-      </div>
-
-      <div>
-        <div class="subsection-title">
-          Software Copyrights <span class="count" id="software-count"></span>
+        <div class="filter-group">
+          <span class="filter-group-label" data-i18n="pubs.role"></span>
+          <div id="pub-filter-role" style="display:flex;gap:6px;flex-wrap:wrap"></div>
         </div>
-        <div class="ip-list" id="software-list"></div>
       </div>
-    </div>
-  </div>
-</section>
+      <div class="pub-list" id="pub-list"></div>
+    </section>
 
-<!-- =========================  HONORS  ========================= -->
-<section id="honors" class="reveal">
-  <div class="container">
-    <h2 class="section-title"><span class="hash">#</span> Honors &amp; Awards</h2>
-    <div class="honor-list" id="honor-list"></div>
-  </div>
-</section>
-
-<!-- =========================  EDUCATION  ========================= -->
-<section id="education" class="reveal">
-  <div class="container">
-    <h2 class="section-title"><span class="hash">#</span> Education</h2>
-    <div class="edu-list" id="edu-list"></div>
-  </div>
-</section>
-
-</main>
-
-<!-- =========================  FOOTER  ========================= -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer-inner">
-      <div>© 2026 Yu Xue · Last updated <script>document.write(new Date().toISOString().slice(0,10))</script></div>
-      <div class="footer-contact">
-        <a id="footer-email" href=""></a>
-        <a id="footer-github" href="" target="_blank" rel="noopener"></a>
+    <section id="patents" class="reveal">
+      <h2 class="section-title"><span class="hash">#</span> <span data-i18n="section.patents"></span></h2>
+      <div class="two-col">
+        <div>
+          <div class="subsection-title">
+            <span data-i18n="patents.invention"></span>
+            <span class="count" id="patent-count"></span>
+          </div>
+          <div class="ip-list" id="patent-list"></div>
+        </div>
+        <div>
+          <div class="subsection-title">
+            <span data-i18n="patents.software"></span>
+            <span class="count" id="software-count"></span>
+          </div>
+          <div class="ip-list" id="software-list"></div>
+        </div>
       </div>
-    </div>
-  </div>
-</footer>
+    </section>
+
+    <section id="honors" class="reveal">
+      <h2 class="section-title"><span class="hash">#</span> <span data-i18n="section.honors"></span></h2>
+      <div class="honor-list" id="honor-list"></div>
+    </section>
+
+    <section id="education" class="reveal">
+      <h2 class="section-title"><span class="hash">#</span> <span data-i18n="section.education"></span></h2>
+      <div class="edu-list" id="edu-list"></div>
+    </section>
+
+    <footer class="footer">
+      <span data-i18n="common.lastUpd"></span>:
+      <script>document.write(new Date().toISOString().slice(0,10))</script>
+      &nbsp;·&nbsp; © 2026 Yu Xue
+    </footer>
+
+  </main>
+</div>
 
 <div id="toast" class="toast"></div>
 

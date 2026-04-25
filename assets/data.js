@@ -1,67 +1,125 @@
 /* ===================================================================
  *  Site Data – edit this file to update content without touching HTML
  *  站点数据文件 —— 更新内容只需修改此文件，无需改动 HTML 结构
+ *
+ *  Bilingual fields use the form { en: "...", cn: "..." }
+ *  Plain strings (paper titles, authors, venues) stay English only.
+ *  双语字段格式：{ en: "...", cn: "..." }；论文题录类保持纯英文。
  * ===================================================================
  */
 
-/* ----------  About / Hero  ---------- */
 window.SITE_DATA = {
 
+  /* ----------  UI Labels (i18n)  ---------- */
+  ui: {
+    nav: {
+      news:        { en: "News",         cn: "动态"       },
+      research:    { en: "Research",     cn: "研究"       },
+      pubs:        { en: "Publications", cn: "论文"       },
+      patents:     { en: "Patents",      cn: "专利"       },
+      honors:      { en: "Honors",       cn: "荣誉"       },
+      education:   { en: "Education",    cn: "教育经历"   }
+    },
+    section: {
+      news:      { en: "News & Updates",      cn: "最新动态"        },
+      research:  { en: "Research Interests",  cn: "研究方向"        },
+      pubs:      { en: "Publications",        cn: "学术论文"        },
+      patents:   { en: "Patents & Software",  cn: "专利与软著"      },
+      honors:    { en: "Honors & Awards",     cn: "荣誉与奖项"      },
+      education: { en: "Education",           cn: "教育经历"        }
+    },
+    pubs: {
+      year:      { en: "Year",            cn: "年份"        },
+      role:      { en: "Role",            cn: "署名"        },
+      all:       { en: "All",             cn: "全部"        },
+      first:     { en: "1st Author",      cn: "第一作者"    },
+      corr:      { en: "Corresponding",   cn: "通信作者"    },
+      sFirst:    { en: "Student 1st",     cn: "学生一作"    },
+      coauthor:  { en: "Co-author",       cn: "合作作者"    },
+      paper:     { en: "Paper",           cn: "原文"        },
+      doi:       { en: "DOI",             cn: "DOI"         },
+      bibtex:    { en: "BibTeX",          cn: "BibTeX"      },
+      abstract:  { en: "Abstract.",       cn: "摘要："      }
+    },
+    patents: {
+      invention: { en: "Invention Patents",   cn: "发明专利"    },
+      software:  { en: "Software Copyrights", cn: "软件著作权"  },
+      items:     { en: "items",               cn: "项"          }
+    },
+    news: {
+      showAll:   { en: "Show all {n} updates ↓", cn: "展开全部 {n} 条 ↓" },
+      showFewer: { en: "Show fewer ↑",            cn: "收起 ↑"            }
+    },
+    common: {
+      advisedBy: { en: "Advised by",  cn: "导师"      },
+      lab:       { en: "Lab",         cn: "实验室"    },
+      lastUpd:   { en: "Last updated",cn: "最后更新"  },
+      copied:    { en: "BibTeX copied ✓", cn: "BibTeX 已复制 ✓" },
+      copyFail:  { en: "Copy failed",     cn: "复制失败"        },
+      themeAria: { en: "Toggle theme",    cn: "切换主题"        },
+      langAria:  { en: "Toggle language", cn: "切换语言"        }
+    }
+  },
+
+  /* ----------  Profile (sidebar)  ---------- */
   profile: {
     nameEn: "Yu Xue",
     nameCn: "薛宇",
-    position: "Ph.D. Candidate",
-    affiliation: "Beihang University",
-    affiliationCn: "北京航空航天大学",
-    advisor: "Prof. Chuang Shi (施闯院士)",
-    lab: "Key Lab of Satellite Navigation &amp; Mobile Communication Integration, MII",
+    photo: "assets/photo.jpg",
+    position:    { en: "Ph.D. Candidate", cn: "博士研究生" },
+    affiliation: { en: "Beihang University", cn: "北京航空航天大学" },
+    lab:         { en: "Key Lab of Satellite Navigation &amp; Mobile Communication Integration, MII",
+                   cn: "卫星导航与移动通信融合技术工信部重点实验室" },
+    advisor:     { en: "Prof. Chuang Shi (Academician of CAE)",
+                   cn: "施闯 院士" },
     email: "xueyu@buaa.edu.cn",
     github: "https://github.com/Xsleet",
-    // 如需展示 Google Scholar / ORCID，取消对应注释并填入链接
     // scholar: "https://scholar.google.com/citations?user=XXXX",
     // orcid: "https://orcid.org/0000-0000-0000-0000",
-    photo: "assets/photo.jpg",
     bio: [
       {
-        en: "I am a Ph.D. candidate at <strong>Beihang University (BUAA)</strong>, advised by Academician Chuang Shi. I work on making satellite-based time and position services more <em>trustworthy</em> and <em>autonomous</em>.",
-        cn: "本人是<strong>北京航空航天大学</strong>通信与信息系统专业博士研究生，师从施闯院士。研究致力于让卫星时空服务更<em>可信</em>、更<em>自主</em>。"
+        en: "I am a Ph.D. candidate at <strong>Beihang University</strong>, advised by Academician Chuang Shi. I work on making satellite-based time and position services more <em>trustworthy</em> and <em>autonomous</em>.",
+        cn: "我是<strong>北京航空航天大学</strong>通信与信息系统专业博士研究生，师从施闯院士。研究致力于让卫星时空服务更<em>可信</em>、更<em>自主</em>。"
       },
       {
-        en: "My research lives at the intersection of <strong>GNSS integrity monitoring</strong>, <strong>LEO constellation timescale</strong>, and <strong>high-precision time metrology</strong> — with the goal of bringing sub-nanosecond PNT services to safety-critical applications.",
-        cn: "研究方向聚焦于 <strong>GNSS 完好性监测</strong>、<strong>低轨星座时间基准</strong>与<strong>高精度时间计量</strong>三个交叉领域，目标是为安全关键应用提供亚纳秒级定位导航授时服务。"
+        en: "My research lives at the intersection of <strong>GNSS integrity monitoring</strong>, <strong>LEO constellation timescale</strong>, and <strong>high-precision time metrology</strong>.",
+        cn: "研究方向聚焦于 <strong>GNSS 完好性监测</strong>、<strong>低轨星座时间基准</strong>与<strong>高精度时间计量</strong>三个交叉领域。"
       }
     ]
   },
 
-  /* ----------  Research themes (3 核心方向)  ---------- */
+  /* ----------  Research themes (3 thematic areas)  ---------- */
   research: [
     {
       icon: "shield",
-      title: "GNSS Integrity Monitoring",
-      titleCn: "高精度定位授时完好性监测",
-      summary: "Extending advanced RAIM to timing services (T-ARAIM) and designing server-side quality monitoring for real-time orbit, clock, and ionospheric corrections.",
-      summaryCn: "将先进 RAIM 算法拓展至授时服务（T-ARAIM），并构建服务端实时轨道、钟差与电离层改正数的质量监测体系。",
+      title:   { en: "GNSS Integrity Monitoring",  cn: "GNSS 完好性监测" },
+      summary: {
+        en: "Extending advanced RAIM to timing services (T-ARAIM) and designing server-side quality monitoring for real-time orbit, clock, and ionospheric corrections.",
+        cn: "将先进 RAIM 算法拓展至授时服务（T-ARAIM），并构建服务端实时轨道、钟差与电离层改正数的质量监测体系。"
+      },
       keywords: ["T-ARAIM", "BDSBAS", "Quality Indicator", "Fault Detection"]
     },
     {
       icon: "satellite",
-      title: "LEO Autonomous Timescale",
-      titleCn: "低轨星座天基自主时间基准",
-      summary: "Architecting space-based timescales with heterogeneous low-SWaP-C clock ensembles and inter-satellite links — GNSS-denied synchronization for mega-constellations.",
-      summaryCn: "基于低 SWaP-C 异构钟组与星间链路，构建天基自主时间基准，为巨型低轨星座提供不依赖 GNSS 的时间同步方案。",
+      title:   { en: "LEO Autonomous Timescale",  cn: "低轨星座天基时间基准" },
+      summary: {
+        en: "Architecting space-based timescales with heterogeneous low-SWaP-C clock ensembles and inter-satellite links — GNSS-denied synchronization for mega-constellations.",
+        cn: "基于低 SWaP-C 异构钟组与星间链路，构建天基自主时间基准，为巨型低轨星座提供不依赖 GNSS 的时间同步方案。"
+      },
       keywords: ["Heterogeneous Clocks", "Inter-Satellite Links", "ETF", "SWaP-C"]
     },
     {
       icon: "clock",
-      title: "Precise Time Metrology",
-      titleCn: "卫星导航在线时间计量",
-      summary: "Tracing timing terminals to UTC(k) over GNSS with sub-nanosecond uncertainty — enabling remote, continuous, and affordable metrology for distributed time systems.",
-      summaryCn: "基于 GNSS 实现授时终端至 UTC(k) 的亚纳秒级远程在线溯源，让分布式时间系统的连续低成本计量成为可能。",
+      title:   { en: "Precise Time Metrology",  cn: "卫星导航在线时间计量" },
+      summary: {
+        en: "Tracing timing terminals to UTC(k) over GNSS with sub-nanosecond uncertainty — enabling remote, continuous, and affordable metrology for distributed time systems.",
+        cn: "基于 GNSS 实现授时终端至 UTC(k) 的亚纳秒级远程在线溯源，让分布式时间系统的连续低成本计量成为可能。"
+      },
       keywords: ["UTC(k)", "PPP Timing", "Online Metrology", "Traceability"]
     }
   ],
 
-  /* ----------  News Timeline (倒序, 最新在前)  ---------- */
+  /* ----------  News Timeline (newest first)  ---------- */
   news: [
     {
       date: "2026-04", tag: "paper",
@@ -115,7 +173,7 @@ window.SITE_DATA = {
     }
   ],
 
-  /* ----------  Publications (from 学术论文.bib)  ---------- */
+  /* ----------  Publications (English-only — academic format)  ---------- */
   publications: [
     {
       key: "xueSpacebasedAutonomousTimescale2026",
@@ -128,8 +186,7 @@ window.SITE_DATA = {
       badges: ["JCR Q1", "IEEE"],
       doi: "10.1109/JIOT.2026.3674470",
       url: "https://ieeexplore.ieee.org/document/11435378",
-      abstract: "Low Earth Orbit (LEO) mega-constellations are emerging as critical infrastructure for the global IoT. We propose a space-based autonomous timescale realization architecture leveraging low SWaP-C heterogeneous clock ensembles (CSACs + mROs) and inter-satellite links. The onboard Harmonic Extended Ensemble Timescale Filter (HE-ETF) mitigates periodic environmental disturbances, while a constellation-level ETF yields LEOT with stability improved by over 35%.",
-      theme: "leo"
+      abstract: "Low Earth Orbit (LEO) mega-constellations are emerging as critical infrastructure for the global IoT. We propose a space-based autonomous timescale realization architecture leveraging low SWaP-C heterogeneous clock ensembles (CSACs + mROs) and inter-satellite links. The onboard Harmonic Extended Ensemble Timescale Filter (HE-ETF) mitigates periodic environmental disturbances, while a constellation-level ETF yields LEOT with stability improved by over 35%."
     },
     {
       key: "xueCharacterizationPredictionLow2026",
@@ -143,8 +200,7 @@ window.SITE_DATA = {
       badges: ["JCR Q1", "IOP"],
       doi: "10.1088/1361-6501/ae5abf",
       url: "https://doi.org/10.1088/1361-6501/ae5abf",
-      abstract: "We analyze GRACE-FO onboard clock offsets, revealing dominant 12h periodicity from the South Atlantic Anomaly and relativistic per-revolution terms. Motivated by these patterns, we propose a Fourier Analysis Network (FAN) that directly embeds Fourier series into the neural architecture. FAN outperforms LSTM by 6.7–11.1% in short-term and 22.7–34.1% in long-term LEO clock prediction.",
-      theme: "leo"
+      abstract: "We analyze GRACE-FO onboard clock offsets, revealing dominant 12h periodicity from the South Atlantic Anomaly and relativistic per-revolution terms. Motivated by these patterns, we propose a Fourier Analysis Network (FAN) that directly embeds Fourier series into the neural architecture. FAN outperforms LSTM by 6.7–11.1% in short-term and 22.7–34.1% in long-term LEO clock prediction."
     },
     {
       key: "xueTimingAdvancedReceiver2025",
@@ -158,8 +214,7 @@ window.SITE_DATA = {
       badges: ["JCR Q1", "IOP"],
       doi: "10.1088/1361-6501/ada789",
       url: "https://dx.doi.org/10.1088/1361-6501/ada789",
-      abstract: "We integrate ARAIM with dual-frequency multi-constellation BDSBAS for GNSS timing integrity. Key improvements in risk allocation, solution estimation, and protection level yield the T-ARAIM algorithm. With BDSBAS augmentation, timing accuracy improves 20–28.5% and T-ARAIM availability reaches 100% in fixed-position scenarios.",
-      theme: "integrity"
+      abstract: "We integrate ARAIM with dual-frequency multi-constellation BDSBAS for GNSS timing integrity. Key improvements in risk allocation, solution estimation, and protection level yield the T-ARAIM algorithm. With BDSBAS augmentation, timing accuracy improves 20–28.5% and T-ARAIM availability reaches 100% in fixed-position scenarios."
     },
     {
       key: "zhengPreliminaryExplorationVerification2025",
@@ -173,8 +228,7 @@ window.SITE_DATA = {
       badges: ["JCR Q1", "IEEE", "Corresponding"],
       doi: "10.1109/TAES.2025.3564920",
       url: "https://ieeexplore.ieee.org/document/10979271",
-      abstract: "Building upon baseline ARAIM, we introduce modifications in risk budget allocation, timing solution estimation, and Timing Protection Level calculation. Fixing receiver coordinates enables global T-ARAIM availability with a single constellation; experiments demonstrate TPL bounds timing errors across globally distributed stations.",
-      theme: "integrity"
+      abstract: "Building upon baseline ARAIM, we introduce modifications in risk budget allocation, timing solution estimation, and Timing Protection Level calculation. Fixing receiver coordinates enables global T-ARAIM availability with a single constellation; experiments demonstrate TPL bounds timing errors across globally distributed stations."
     },
     {
       key: "xueOnlineTimeMetrology2025",
@@ -187,8 +241,7 @@ window.SITE_DATA = {
       badges: ["EI", "IEEE"],
       doi: "10.1109/EFTF/IFCS64367.2025.11194696",
       url: "https://ieeexplore.ieee.org/document/11194696/",
-      abstract: "A remote online metrology method for timing terminals based on GNSS. We trace the time datum of real-time satellite clock offset products to UTC(k) via coupling between receiver and satellite clock parameters. Long-distance experiments achieve sub-nanosecond accuracy with 0.15 ns A-type uncertainty.",
-      theme: "metrology"
+      abstract: "A remote online metrology method for timing terminals based on GNSS. We trace the time datum of real-time satellite clock offset products to UTC(k) via coupling between receiver and satellite clock parameters. Long-distance experiments achieve sub-nanosecond accuracy with 0.15 ns A-type uncertainty."
     },
     {
       key: "dengLNFMHighPrecisionFrequency2025",
@@ -202,8 +255,7 @@ window.SITE_DATA = {
       badges: ["JCR Q1", "IEEE"],
       doi: "10.1109/TIM.2025.3588945",
       url: "https://ieeexplore.ieee.org/document/11080490",
-      abstract: "A compact cost-effective low-noise frequency stability measurement system (LNFM) using Precise Point Timing to compensate OCXO long-term drift. SDR-based DMTD achieves a noise floor of 5.3×10⁻¹⁴ τ⁻¹, with Allan deviation measurement precision comparable to commercial instruments using hydrogen masers as reference.",
-      theme: "metrology"
+      abstract: "A compact cost-effective low-noise frequency stability measurement system (LNFM) using Precise Point Timing to compensate OCXO long-term drift. SDR-based DMTD achieves a noise floor of 5.3×10⁻¹⁴ τ⁻¹, with Allan deviation measurement precision comparable to commercial instruments using hydrogen masers as reference."
     },
     {
       key: "xueNewQualityMonitoring2024",
@@ -217,8 +269,7 @@ window.SITE_DATA = {
       badges: ["JCR Q1", "Springer"],
       doi: "10.1007/s10291-024-01673-z",
       url: "https://doi.org/10.1007/s10291-024-01673-z",
-      abstract: "A quality monitoring method for real-time precise satellite orbit and clock products using a global station network. We compute pseudorange and carrier-phase Quality Indicators (QIs) and apply iForest outlier detection to mitigate network failures. The carrier-phase QI bounds 99.93% of product errors within 15 cm and reduces false alerts by 68.9%.",
-      theme: "integrity"
+      abstract: "A quality monitoring method for real-time precise satellite orbit and clock products using a global station network. We compute pseudorange and carrier-phase Quality Indicators (QIs) and apply iForest outlier detection to mitigate network failures. The carrier-phase QI bounds 99.93% of product errors within 15 cm and reduces false alerts by 68.9%."
     },
     {
       key: "shiAdaptiveQualityMonitoring2022",
@@ -232,117 +283,107 @@ window.SITE_DATA = {
       badges: ["JCR Q1", "Springer", "Student 1st"],
       doi: "10.1007/s10291-022-01344-x",
       url: "https://doi.org/10.1007/s10291-022-01344-x",
-      abstract: "An adaptive GIVE algorithm for real-time ionospheric correction quality monitoring. By introducing three adjustment coefficients optimized via PSO, the method achieves ≥46.7% improvement in ionospheric error bounding compared to traditional SBAS algorithms, with coefficients extrapolatable across low-activity periods.",
-      theme: "integrity"
+      abstract: "An adaptive GIVE algorithm for real-time ionospheric correction quality monitoring. By introducing three adjustment coefficients optimized via PSO, the method achieves ≥46.7% improvement in ionospheric error bounding compared to traditional SBAS algorithms, with coefficients extrapolatable across low-activity periods."
     }
   ],
 
-  /* ----------  Patents (editable — fill in details as needed)  ---------- */
-  /*  注：谷歌/中国知识产权局公开检索未返回可直接确认的条目。              */
-  /*  请在下方按需更新专利号、授权日期等（从国家知识产权局检索获取）。        */
+  /* ----------  Patents (CN patent number to be filled in)  ---------- */
   patents: [
     {
-      title: "一种GNSS实时精密轨道与钟差产品质量监测方法",
-      titleEn: "A Quality Monitoring Method for Real-Time Precise GNSS Orbit and Clock Products",
-      number: "CN—待填写",
-      date: "2024",
-      inventors: ["薛宇", "郑福", "施闯", "等"],
-      status: "granted",
-      theme: "integrity"
+      title: { en: "Quality Monitoring Method for Real-Time Precise GNSS Orbit and Clock Products",
+               cn: "GNSS 实时精密轨道与钟差产品质量监测方法" },
+      number: "CN—待填写", date: "2024",
+      inventors: ["Yu Xue", "Fu Zheng", "Chuang Shi", "et al."]
     },
     {
-      title: "基于BDSBAS增强的高精度授时完好性监测方法",
-      titleEn: "High-Precision Timing Integrity Monitoring Method Augmented by BDSBAS",
-      number: "CN—待填写",
-      date: "2025",
-      inventors: ["薛宇", "郑福", "施闯", "等"],
-      status: "granted",
-      theme: "integrity"
+      title: { en: "High-Precision Timing Integrity Monitoring Method Augmented by BDSBAS",
+               cn: "基于 BDSBAS 增强的高精度授时完好性监测方法" },
+      number: "CN—待填写", date: "2025",
+      inventors: ["Yu Xue", "Fu Zheng", "Chuang Shi", "et al."]
     },
     {
-      title: "低轨星座天基自主时间基准建立与维持方法",
-      titleEn: "Space-based Autonomous Timescale Realization Method for LEO Constellations",
-      number: "CN—待填写",
-      date: "2025",
-      inventors: ["薛宇", "郑福", "施闯", "等"],
-      status: "granted",
-      theme: "leo"
+      title: { en: "Space-based Autonomous Timescale Realization Method for LEO Constellations",
+               cn: "低轨星座天基自主时间基准建立与维持方法" },
+      number: "CN—待填写", date: "2025",
+      inventors: ["Yu Xue", "Fu Zheng", "Chuang Shi", "et al."]
     },
     {
-      title: "基于傅里叶神经网络的低轨卫星钟差建模与预报方法",
-      titleEn: "Fourier Neural Network-based LEO Satellite Clock Offset Modeling and Prediction",
-      number: "CN—待填写",
-      date: "2025",
-      inventors: ["薛宇", "郑福", "施闯", "等"],
-      status: "granted",
-      theme: "leo"
+      title: { en: "Fourier Neural Network-based LEO Satellite Clock Modeling and Prediction",
+               cn: "基于傅里叶神经网络的低轨卫星钟差建模与预报方法" },
+      number: "CN—待填写", date: "2025",
+      inventors: ["Yu Xue", "Fu Zheng", "Chuang Shi", "et al."]
     },
     {
-      title: "基于GNSS的远程在线时间计量方法",
-      titleEn: "GNSS-based Remote Online Time Metrology Method",
-      number: "CN—待填写",
-      date: "2025",
-      inventors: ["薛宇", "张东", "郑福", "施闯", "等"],
-      status: "granted",
-      theme: "metrology"
+      title: { en: "GNSS-based Remote Online Time Metrology Method",
+               cn: "基于 GNSS 的远程在线时间计量方法" },
+      number: "CN—待填写", date: "2025",
+      inventors: ["Yu Xue", "Dong Zhang", "Fu Zheng", "Chuang Shi", "et al."]
     }
   ],
 
-  /* ----------  Software Copyrights (editable)  ---------- */
   software: [
     {
-      title: "GNSS实时精密产品质量监测软件",
-      titleEn: "GNSS Real-Time Precise Products Quality Monitoring Software",
-      number: "软著登字第—待填写",
-      year: "2023",
-      theme: "integrity"
+      title: { en: "GNSS Real-Time Precise Products Quality Monitoring Software",
+               cn: "GNSS 实时精密产品质量监测软件" },
+      number: "软著登字第—待填写", year: "2023"
     },
     {
-      title: "授时完好性监测与在线时间计量平台",
-      titleEn: "Timing Integrity Monitoring & Online Metrology Platform",
-      number: "软著登字第—待填写",
-      year: "2024",
-      theme: "metrology"
+      title: { en: "Timing Integrity Monitoring &amp; Online Metrology Platform",
+               cn: "授时完好性监测与在线时间计量平台" },
+      number: "软著登字第—待填写", year: "2024"
     }
   ],
 
   /* ----------  Education  ---------- */
   education: [
     {
-      school: "Beihang University",
-      schoolCn: "北京航空航天大学",
-      degree: "Ph.D.",
-      field: "Communication &amp; Information Systems",
+      school: { en: "Beihang University", cn: "北京航空航天大学" },
+      degree: { en: "Ph.D. · Communication & Information Systems",
+                cn: "博士 · 通信与信息系统" },
       period: "Sep 2023 – Present",
-      note: "Advisor: Academician Chuang Shi"
+      note:   { en: "Advisor: Academician Chuang Shi",
+                cn: "导师：施闯 院士" }
     },
     {
-      school: "Beihang University",
-      schoolCn: "北京航空航天大学",
-      degree: "M.Eng.",
-      field: "Electronic Information (ICE)",
+      school: { en: "Beihang University", cn: "北京航空航天大学" },
+      degree: { en: "M.Eng. · Electronic Information (ICE)",
+                cn: "硕士 · 电子信息（信息与通信工程）" },
       period: "Sep 2020 – Jun 2023",
-      note: "GPA 91.82 · Rank 5/183"
+      note:   { en: "GPA 91.82 · Rank 5/183",
+                cn: "GPA 91.82 · 专业排名 5/183" }
     },
     {
-      school: "Beijing Jiaotong University",
-      schoolCn: "北京交通大学",
-      degree: "B.Eng.",
-      field: "Communication Engineering",
+      school: { en: "Beijing Jiaotong University", cn: "北京交通大学" },
+      degree: { en: "B.Eng. · Communication Engineering",
+                cn: "学士 · 通信工程" },
       period: "Sep 2016 – Jun 2020",
-      note: "GPA 3.47 / 4.0"
+      note:   { en: "GPA 3.47 / 4.0", cn: "GPA 3.47 / 4.0" }
     }
   ],
 
   /* ----------  Honors & Awards  ---------- */
   honors: [
-    { year: "2025", title: "CAST Young Talent Cultivation Program (PhD Special Track)", cn: "中国科协青年人才培育工程博士生专项计划" },
-    { year: "2025", title: "Outstanding Graduate Student, Beihang University", cn: "北航优秀研究生" },
-    { year: "2024", title: "National 2nd Place — 13th China Innovation &amp; Entrepreneurship Competition (Beidou Track)", cn: "中国创新创业大赛北斗应用赛全国第二名" },
-    { year: "2023", title: "Outstanding Graduate, Beihang University", cn: "北航优秀毕业生" },
-    { year: "2022", title: "National 2nd Prize — 3rd Central Enterprise Innovation Competition", cn: "第三届央企熠星创新创意大赛全国二等奖" },
-    { year: "2022", title: "Three-Good Student, Beihang University", cn: "北航三好学生" },
-    { year: "2022", title: "National Excellence Award — 4th \"Beidou+\" Innovation Competition", cn: "第四届北斗+创新创业大赛全国优秀奖" }
+    { year: "2025",
+      en: "CAST Young Talent Cultivation Program (PhD Special Track)",
+      cn: "中国科协青年人才培育工程博士生专项计划" },
+    { year: "2025",
+      en: "Outstanding Graduate Student, Beihang University",
+      cn: "北京航空航天大学优秀研究生" },
+    { year: "2024",
+      en: "National 2nd Place — 13th China Innovation &amp; Entrepreneurship Competition (Beidou Track)",
+      cn: "第十三届中国创新创业大赛北斗应用赛全国第二名" },
+    { year: "2023",
+      en: "Outstanding Graduate, Beihang University",
+      cn: "北京航空航天大学优秀毕业生" },
+    { year: "2022",
+      en: "National 2nd Prize — 3rd Central Enterprise Innovation Competition",
+      cn: "第三届央企熠星创新创意大赛全国二等奖" },
+    { year: "2022",
+      en: "Three-Good Student, Beihang University",
+      cn: "北京航空航天大学三好学生" },
+    { year: "2022",
+      en: "National Excellence Award — 4th \"Beidou+\" Innovation Competition",
+      cn: "第四届北斗+创新创业大赛全国优秀奖" }
   ]
 
 };
