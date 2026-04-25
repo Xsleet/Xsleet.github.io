@@ -42,7 +42,10 @@
     q('#hero-name').innerHTML = `${p.nameEn}<span class="cn">${p.nameCn}</span>`;
     q('#hero-title').innerHTML = `${p.position} <span class="at">@</span> <span class="inst">${p.affiliation}</span>`;
     q('#hero-affil').innerHTML = `${p.lab}<br/>Advised by ${p.advisor}`;
-    q('#hero-bio').innerHTML = p.bio.map(b => `<p>${b}</p>`).join('');
+    q('#hero-bio').innerHTML = p.bio.map(b => {
+      if (typeof b === 'string') return `<p>${b}</p>`;
+      return `<p>${b.en}<span class="cn-line">${b.cn}</span></p>`;
+    }).join('');
 
     const links = q('#hero-links');
     links.innerHTML = '';
@@ -68,10 +71,12 @@
       list.innerHTML = '';
       items.slice(0, n).forEach(it => {
         const row = el('div', 'news-item');
+        const enText = it.en || it.text || '';
+        const cnText = it.cn ? `<span class="cn-line">${it.cn}</span>` : '';
         row.innerHTML = `
           <span class="news-date">${it.date}</span>
           <span class="news-tag" data-tag="${it.tag}">${it.tag[0].toUpperCase()}</span>
-          <span class="news-text">${it.text}</span>`;
+          <span class="news-text">${enText}${cnText}</span>`;
         list.appendChild(row);
       });
     };
@@ -99,6 +104,7 @@
         <h3 class="research-title">${r.title}</h3>
         <div class="research-title-cn">${r.titleCn}</div>
         <p class="research-summary">${r.summary}</p>
+        ${r.summaryCn ? `<p class="research-summary-cn">${r.summaryCn}</p>` : ''}
         <div class="research-keywords">
           ${r.keywords.map(k => `<span class="kw">${k}</span>`).join('')}
         </div>`;

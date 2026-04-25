@@ -22,8 +22,14 @@ window.SITE_DATA = {
     // orcid: "https://orcid.org/0000-0000-0000-0000",
     photo: "assets/photo.jpg",
     bio: [
-      "I am a Ph.D. candidate at <strong>Beihang University (BUAA)</strong>, advised by Academician Chuang Shi. I work on making satellite-based time and position services more <em>trustworthy</em> and <em>autonomous</em>.",
-      "My research lives at the intersection of <strong>GNSS integrity monitoring</strong>, <strong>LEO constellation timescale</strong>, and <strong>high-precision time metrology</strong> — with the goal of bringing sub-nanosecond PNT services to safety-critical applications."
+      {
+        en: "I am a Ph.D. candidate at <strong>Beihang University (BUAA)</strong>, advised by Academician Chuang Shi. I work on making satellite-based time and position services more <em>trustworthy</em> and <em>autonomous</em>.",
+        cn: "本人是<strong>北京航空航天大学</strong>通信与信息系统专业博士研究生，师从施闯院士。研究致力于让卫星时空服务更<em>可信</em>、更<em>自主</em>。"
+      },
+      {
+        en: "My research lives at the intersection of <strong>GNSS integrity monitoring</strong>, <strong>LEO constellation timescale</strong>, and <strong>high-precision time metrology</strong> — with the goal of bringing sub-nanosecond PNT services to safety-critical applications.",
+        cn: "研究方向聚焦于 <strong>GNSS 完好性监测</strong>、<strong>低轨星座时间基准</strong>与<strong>高精度时间计量</strong>三个交叉领域，目标是为安全关键应用提供亚纳秒级定位导航授时服务。"
+      }
     ]
   },
 
@@ -34,6 +40,7 @@ window.SITE_DATA = {
       title: "GNSS Integrity Monitoring",
       titleCn: "高精度定位授时完好性监测",
       summary: "Extending advanced RAIM to timing services (T-ARAIM) and designing server-side quality monitoring for real-time orbit, clock, and ionospheric corrections.",
+      summaryCn: "将先进 RAIM 算法拓展至授时服务（T-ARAIM），并构建服务端实时轨道、钟差与电离层改正数的质量监测体系。",
       keywords: ["T-ARAIM", "BDSBAS", "Quality Indicator", "Fault Detection"]
     },
     {
@@ -41,6 +48,7 @@ window.SITE_DATA = {
       title: "LEO Autonomous Timescale",
       titleCn: "低轨星座天基自主时间基准",
       summary: "Architecting space-based timescales with heterogeneous low-SWaP-C clock ensembles and inter-satellite links — GNSS-denied synchronization for mega-constellations.",
+      summaryCn: "基于低 SWaP-C 异构钟组与星间链路，构建天基自主时间基准，为巨型低轨星座提供不依赖 GNSS 的时间同步方案。",
       keywords: ["Heterogeneous Clocks", "Inter-Satellite Links", "ETF", "SWaP-C"]
     },
     {
@@ -48,22 +56,63 @@ window.SITE_DATA = {
       title: "Precise Time Metrology",
       titleCn: "卫星导航在线时间计量",
       summary: "Tracing timing terminals to UTC(k) over GNSS with sub-nanosecond uncertainty — enabling remote, continuous, and affordable metrology for distributed time systems.",
+      summaryCn: "基于 GNSS 实现授时终端至 UTC(k) 的亚纳秒级远程在线溯源，让分布式时间系统的连续低成本计量成为可能。",
       keywords: ["UTC(k)", "PPP Timing", "Online Metrology", "Traceability"]
     }
   ],
 
   /* ----------  News Timeline (倒序, 最新在前)  ---------- */
   news: [
-    { date: "2026-04", text: "Paper <em>Characterization and Prediction of LEO Satellite Clock Offsets Based on Fourier Analysis Network</em> published in <strong>Meas. Sci. Technol.</strong>", tag: "paper" },
-    { date: "2026-03", text: "Paper <em>Space-based Autonomous Timescale for LEO Constellations</em> accepted by <strong>IEEE Internet of Things Journal</strong>.", tag: "paper" },
-    { date: "2025-09", text: "Selected for <strong>2025 CAST Young Talent Cultivation Program</strong> (PhD Special Track).", tag: "honor" },
-    { date: "2025-07", text: "Co-authored paper <em>LNFM</em> on high-precision frequency stability measurement published in <strong>IEEE Trans. Instrum. Meas.</strong>", tag: "paper" },
-    { date: "2025-05", text: "Oral presentation at <strong>EFTF/IFCS 2025</strong> on online GNSS time metrology.", tag: "talk" },
-    { date: "2025-05", text: "Paper <em>Preliminary Exploration and Verification of T-ARAIM</em> published in <strong>IEEE Trans. Aerosp. Electron. Syst.</strong>", tag: "paper" },
-    { date: "2025-03", text: "Awarded <strong>BUAA Outstanding Graduate Student</strong>.", tag: "honor" },
-    { date: "2025-01", text: "Paper <em>Timing ARAIM Augmented by BDSBAS</em> published in <strong>Meas. Sci. Technol.</strong>", tag: "paper" },
-    { date: "2024-12", text: "<strong>National 2nd Place</strong> at the 13th China Innovation &amp; Entrepreneurship Competition (Beidou Track).", tag: "honor" },
-    { date: "2024-05", text: "Paper <em>A New Quality Monitoring Method for Real-Time Precise Orbit and Clock Products</em> published in <strong>GPS Solutions</strong>.", tag: "paper" }
+    {
+      date: "2026-04", tag: "paper",
+      en: "Paper <em>Characterization and Prediction of LEO Satellite Clock Offsets Based on Fourier Analysis Network</em> published in <strong>Meas. Sci. Technol.</strong>",
+      cn: "论文《基于傅里叶分析网络的低轨卫星钟差表征与预报》在 <strong>Meas. Sci. Technol.</strong> 期刊发表。"
+    },
+    {
+      date: "2026-03", tag: "paper",
+      en: "Paper <em>Space-based Autonomous Timescale for LEO Constellations</em> accepted by <strong>IEEE Internet of Things Journal</strong>.",
+      cn: "论文《低轨星座天基自主时间基准》被 <strong>IEEE IoT Journal</strong> 期刊录用。"
+    },
+    {
+      date: "2025-09", tag: "honor",
+      en: "Selected for <strong>2025 CAST Young Talent Cultivation Program</strong> (PhD Special Track).",
+      cn: "入选 <strong>2025 年度中国科协青年人才培育工程</strong>博士生专项计划。"
+    },
+    {
+      date: "2025-07", tag: "paper",
+      en: "Co-authored paper <em>LNFM</em> on high-precision frequency stability measurement published in <strong>IEEE Trans. Instrum. Meas.</strong>",
+      cn: "合作论文《LNFM：高精度频率稳定度测量系统》在 <strong>IEEE Trans. Instrum. Meas.</strong> 期刊发表。"
+    },
+    {
+      date: "2025-05", tag: "talk",
+      en: "Oral presentation at <strong>EFTF/IFCS 2025</strong> on online GNSS time metrology.",
+      cn: "在 <strong>EFTF/IFCS 2025</strong> 国际学术会议作 GNSS 在线时间计量主题口头报告。"
+    },
+    {
+      date: "2025-05", tag: "paper",
+      en: "Paper <em>Preliminary Exploration and Verification of T-ARAIM</em> published in <strong>IEEE Trans. Aerosp. Electron. Syst.</strong>",
+      cn: "论文《授时先进 RAIM 算法初步探索与验证》在 <strong>IEEE TAES</strong> 期刊发表。"
+    },
+    {
+      date: "2025-03", tag: "honor",
+      en: "Awarded <strong>BUAA Outstanding Graduate Student</strong>.",
+      cn: "获评 <strong>北京航空航天大学优秀研究生</strong>。"
+    },
+    {
+      date: "2025-01", tag: "paper",
+      en: "Paper <em>Timing ARAIM Augmented by BDSBAS</em> published in <strong>Meas. Sci. Technol.</strong>",
+      cn: "论文《BDSBAS 增强的授时先进 RAIM 算法》在 <strong>Meas. Sci. Technol.</strong> 期刊发表。"
+    },
+    {
+      date: "2024-12", tag: "honor",
+      en: "<strong>National 2nd Place</strong> at the 13th China Innovation &amp; Entrepreneurship Competition (Beidou Track).",
+      cn: "获<strong>第十三届中国创新创业大赛北斗应用赛全国第二名</strong>。"
+    },
+    {
+      date: "2024-05", tag: "paper",
+      en: "Paper <em>A New Quality Monitoring Method for Real-Time Precise Orbit and Clock Products</em> published in <strong>GPS Solutions</strong>.",
+      cn: "论文《实时精密轨道与钟差产品质量监测新方法》在 <strong>GPS Solutions</strong> 期刊发表。"
+    }
   ],
 
   /* ----------  Publications (from 学术论文.bib)  ---------- */
