@@ -1,0 +1,11 @@
+# Personal documents (kept locally, not pushed)
+薛宇-北航-个人简历.pdf
+Snipaste_2024-09-26_16-39-38.jpg
+学术论文.bib
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp

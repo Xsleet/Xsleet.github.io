@@ -1,443 +1,154 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Yu Xue (薛宇) | Beihang University</title>
-  <meta name="description" content="Yu Xue (薛宇) – Ph.D. Candidate at Beihang University. Research: GNSS high-precision PNT, LEO constellation timescale, integrity monitoring." />
-  <link rel="stylesheet" href="style.css" />
+  <title>Yu Xue · 薛宇 — Beihang University</title>
+  <meta name="description" content="Yu Xue (薛宇) — Ph.D. Candidate at Beihang University. Research on GNSS integrity monitoring, LEO constellation timescale, and precise time metrology." />
+  <meta name="author" content="Yu Xue" />
+
+  <meta property="og:title" content="Yu Xue · Academic Homepage" />
+  <meta property="og:description" content="Ph.D. Candidate at Beihang University — GNSS, LEO timescale, precise time metrology." />
+  <meta property="og:type" content="website" />
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛰️%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="assets/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 </head>
 <body>
 
-<!-- ===== Navigation ===== -->
-<nav>
+<!-- =========================  NAV  ========================= -->
+<nav class="nav">
   <div class="nav-inner">
-    <span class="nav-brand">Yu Xue <span>薛宇</span></span>
+    <a href="#hero" class="nav-brand">Yu Xue <span class="dot">·</span> 薛宇</a>
     <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#education">Education</a></li>
+      <li><a href="#news">News</a></li>
       <li><a href="#research">Research</a></li>
       <li><a href="#publications">Publications</a></li>
+      <li><a href="#patents">Patents</a></li>
       <li><a href="#honors">Honors</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="#education">Education</a></li>
     </ul>
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme"></button>
   </div>
 </nav>
 
 <main>
 
-<!-- ===== Hero / About ===== -->
-<section id="about">
+<!-- =========================  HERO  ========================= -->
+<section id="hero">
   <div class="container">
     <div class="hero">
-
       <div class="hero-photo">
-        <img src="assets/photo.jpg" alt="Yu Xue" />
+        <img id="hero-photo" src="" alt="" />
       </div>
-
       <div class="hero-info">
-        <h1>Yu Xue</h1>
-        <p class="name-cn">薛宇</p>
-        <p class="title">Ph.D. Candidate in Communication &amp; Information Systems</p>
-        <p class="institution">
-          School of Electronics and Information Engineering<br/>
-          Beihang University (BUAA), Beijing, China
-        </p>
-        <p class="advisor">
-          Supervised by <strong>Academician Shi Chuang (施闯 院士)</strong><br/>
-          Key Lab of Satellite Navigation &amp; Mobile Communication Integration Technology (MII)
-        </p>
-
-        <div class="contact-links">
-          <a class="contact-link" href="mailto:xueyu@buaa.edu.cn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            xueyu@buaa.edu.cn
-          </a>
-          <a class="contact-link" href="https://github.com/Xsleet" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-            GitHub
-          </a>
-        </div>
-
-        <div class="research-tags">
-          <span class="tag">GNSS High-Precision PNT</span>
-          <span class="tag">LEO Timescale</span>
-          <span class="tag">Integrity Monitoring</span>
-          <span class="tag">Satellite Navigation</span>
-        </div>
+        <h1 id="hero-name"></h1>
+        <div class="hero-title" id="hero-title"></div>
+        <div class="hero-affil" id="hero-affil"></div>
+        <div class="hero-bio" id="hero-bio"></div>
+        <div class="hero-links" id="hero-links"></div>
       </div>
-
-    </div><!-- .hero -->
-
-    <div style="margin-top:40px;" class="about-text">
-      <p>
-        I am a Ph.D. candidate in Communication and Information Systems at <strong>Beihang University (BUAA)</strong>,
-        advised by Academician <strong>Shi Chuang</strong>. My research focuses on
-        <strong>GNSS high-precision, high-integrity positioning, navigation, and timing (PNT)</strong>
-        as well as <strong>space-based autonomous timescale construction and maintenance for LEO mega-constellations</strong>.
-      </p>
-      <p>
-        I have published <strong>6 SCI journal papers</strong> as first/student-first/corresponding author
-        in leading venues including <em>GPS Solutions</em>, <em>IEEE IoT Journal</em>, and <em>IEEE TAES</em>,
-        along with 1 EI conference paper. I have been granted <strong>5 national invention patents</strong>
-        and 2 software copyrights, and have delivered oral presentations at 4 international conferences.
-      </p>
-      <p>
-        Previously, I received my M.Eng. from Beihang University (GPA 91.82, Rank 5/183) and my B.Eng.
-        from Beijing Jiaotong University (GPA 3.47/4.0).
-      </p>
-      <div class="stats-row">
-        <div class="stat"><div class="num">6</div><div class="label">SCI Papers</div></div>
-        <div class="stat"><div class="num">5</div><div class="label">Invention Patents</div></div>
-        <div class="stat"><div class="num">4</div><div class="label">Oral Presentations</div></div>
-        <div class="stat"><div class="num">Q1</div><div class="label">All SCI Journals</div></div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ===== Education ===== -->
-<section id="education">
-  <div class="container">
-    <h2 class="section-title">Education</h2>
-    <div class="edu-list">
-
-      <div class="edu-item">
-        <div class="edu-logo">BUAA</div>
-        <div class="edu-body">
-          <div class="edu-school">Beihang University (北京航空航天大学)</div>
-          <div class="edu-degree">Ph.D. · Communication &amp; Information Systems (通信与信息系统)</div>
-          <div class="edu-period">Sep 2023 – Present</div>
-          <div class="edu-details">
-            Advisor: Academician Shi Chuang (施闯 院士) ·
-            Key Lab of Satellite Navigation &amp; Mobile Communication Integration (MII)<br/>
-            Research: GNSS high-precision high-integrity PNT · GNSS/LEO constellation timescale construction<br/>
-            <strong>Awards:</strong> BUAA Outstanding Graduate Student (2025) ·
-            National 2nd Place, 13th China Innovation Competition Beidou Track ·
-            Selected for 2025 CAST Young Talent Program (PhD Special)
-          </div>
-        </div>
-      </div>
-
-      <div class="edu-item">
-        <div class="edu-logo">BUAA</div>
-        <div class="edu-body">
-          <div class="edu-school">Beihang University (北京航空航天大学)</div>
-          <div class="edu-degree">M.Eng. · Electronic Information – Information &amp; Communication Engineering</div>
-          <div class="edu-period">Sep 2020 – Jun 2023</div>
-          <div class="edu-details">
-            GPA: <strong>91.82</strong> · Rank: <strong>5 / 183</strong><br/>
-            Key Courses: Satellite Navigation Principles, Advanced Integrated Navigation, Machine Learning, Matrix Theory, Stochastic Processes<br/>
-            <strong>Awards:</strong> National 2nd Prize, 3rd Central Enterprise Innovation Competition ·
-            National Excellence, 4th "Beidou+" Competition ·
-            BUAA Outstanding Graduate (2023) · BUAA Three-Good Student (2022)
-          </div>
-        </div>
-      </div>
-
-      <div class="edu-item">
-        <div class="edu-logo">BJTU</div>
-        <div class="edu-body">
-          <div class="edu-school">Beijing Jiaotong University (北京交通大学)</div>
-          <div class="edu-degree">B.Eng. · Communication Engineering (通信工程)</div>
-          <div class="edu-period">Sep 2016 – Jun 2020</div>
-          <div class="edu-details">
-            GPA: <strong>3.47 / 4.0</strong><br/>
-            Key Courses: Communication Principles, Wireless Communication, Digital Signal Processing, Fiber Optics, Circuit Analysis, Computer Networks
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>
 
-<!-- ===== Research ===== -->
-<section id="research">
+<!-- =========================  NEWS  ========================= -->
+<section id="news" class="reveal">
   <div class="container">
-    <h2 class="section-title">Research</h2>
-    <div class="research-list">
+    <h2 class="section-title"><span class="hash">#</span> News &amp; Updates</h2>
+    <div class="news-list" id="news-list"></div>
+    <button class="news-toggle-btn" id="news-toggle">Show all</button>
+  </div>
+</section>
 
-      <!-- Project 1 -->
-      <div class="research-card">
-        <h3>Space-based Autonomous Elastic Timescale Construction and Maintenance for LEO Constellations<br/>
-          <span style="font-weight:400;font-size:0.88rem;color:#5f6368;">低轨星座天基自主弹性时间基准建立与维持理论方法研究</span>
-        </h3>
-        <div class="research-period">Sep 2024 – Present</div>
-        <div class="research-desc">
-          <strong>Background:</strong> Timescale is the core foundation for synchronizing satellites in a constellation.
-          LEO mega-constellations feature ultra-large scale and rapid dynamics, while low-cost miniaturized
-          platforms constrain onboard clock performance, posing critical challenges to conventional
-          ground-dependent timescale construction. System vulnerability to space-environment disturbances
-          and adversarial interference further highlights the need for autonomous, elastic solutions.
-          <br/><br/>
-          <strong>Contributions:</strong> In-depth analysis of low-cost LEO satellite clock error characteristics
-          under complex near-Earth space environments; precise LEO clock error modeling and prediction
-          via Fourier neural networks; proposal of a space-based autonomous timescale architecture
-          based on heterogeneous low-SWaP-C clock ensembles and inter-satellite links (ISLs), achieving
-          robust timescale realization independent of GNSS and ground infrastructure.
+<!-- =========================  RESEARCH  ========================= -->
+<section id="research" class="reveal">
+  <div class="container">
+    <h2 class="section-title"><span class="hash">#</span> Research Interests</h2>
+    <div class="research-grid" id="research-grid"></div>
+  </div>
+</section>
+
+<!-- =========================  PUBLICATIONS  ========================= -->
+<section id="publications" class="reveal">
+  <div class="container">
+    <h2 class="section-title"><span class="hash">#</span> Publications</h2>
+
+    <div class="pub-filter">
+      <div class="filter-group">
+        <span class="filter-group-label">Year</span>
+        <div id="pub-filter-year" style="display:flex;gap:6px;flex-wrap:wrap"></div>
+      </div>
+      <div class="filter-group">
+        <span class="filter-group-label">Role</span>
+        <div id="pub-filter-role" style="display:flex;gap:6px;flex-wrap:wrap"></div>
+      </div>
+    </div>
+
+    <div class="pub-list" id="pub-list"></div>
+  </div>
+</section>
+
+<!-- =========================  PATENTS & SOFTWARE  ========================= -->
+<section id="patents" class="reveal">
+  <div class="container">
+    <h2 class="section-title"><span class="hash">#</span> Patents &amp; Software</h2>
+
+    <div class="two-col">
+      <div>
+        <div class="subsection-title">
+          Invention Patents <span class="count" id="patent-count"></span>
         </div>
-        <div class="research-pubs">
-          <p>Related Publications</p>
-          <ul>
-            <li><strong>Xue Y</strong>, Zheng F, Zhang D, Chen X, Shi C (2026) Space-based Autonomous Timescale Realization for LEO Constellations Enabled by Low SWaP-C Heterogeneous Clock Ensembles and ISLs. <em>IEEE Internet of Things Journal</em>. <span class="badge badge-q1">JCR Q1</span></li>
-            <li><strong>Xue Y</strong>, Zheng F, Xue K, Shi C, Jing G (2026) Characterization and prediction of LEO satellite clock offsets based on Fourier analysis network. <em>Meas Sci Technol</em> 37(15). <span class="badge badge-q1">JCR Q1</span></li>
-            <li><strong>Xue Y</strong>, Zhang D, Zheng F, Shi C, Wang Y, Zhang A (2025) Online Time Metrology Method Based on GNSS. <em>EFTF/IFCS 2025</em>, pp 1–3. <span class="badge badge-ei">EI</span></li>
-          </ul>
-        </div>
+        <div class="ip-list" id="patent-list"></div>
       </div>
 
-      <!-- Project 2 -->
-      <div class="research-card">
-        <h3>High-Precision GNSS Positioning, Navigation, and Timing (PNT) Integrity Monitoring<br/>
-          <span style="font-weight:400;font-size:0.88rem;color:#5f6368;">北斗高精度定位导航授时可信监测理论方法研究</span>
-        </h3>
-        <div class="research-period">Sep 2020 – Present</div>
-        <div class="research-desc">
-          <strong>Background:</strong> GNSS provides low-cost, high-precision PNT services with broad societal impact.
-          However, inherent GNSS vulnerabilities—including signal errors, multipath, and interference—limit
-          the reliability of positioning and timing services. Systematic integrity monitoring is essential
-          to ensure safe and trustworthy GNSS applications.
-          <br/><br/>
-          <strong>Contributions:</strong> On the service side: quality monitoring of satellite orbit/clock corrections
-          and ionospheric corrections in wide-area real-time precise positioning, with quality flags broadcast
-          to users. On the user side: proposal of a Timing Advanced RAIM (T-ARAIM) algorithm extending
-          classical ARAIM to high-precision timing integrity monitoring, spanning risk budget allocation,
-          timing solution estimation, and timing protection level computation.
+      <div>
+        <div class="subsection-title">
+          Software Copyrights <span class="count" id="software-count"></span>
         </div>
-        <div class="research-pubs">
-          <p>Related Publications</p>
-          <ul>
-            <li><strong>Xue Y</strong>, Zheng F, et al. (2025) Timing advanced receiver autonomous integrity monitoring augmented by BDSBAS. <em>Meas Sci Technol</em> 36(2):026312. <span class="badge badge-q1">JCR Q1</span></li>
-            <li>Zheng F, <strong>Xue Y*</strong>, et al. (2025) Preliminary Exploration and Verification of Timing Advanced RAIM. <em>IEEE Trans Aerosp Electron Syst</em> 61(4):10935–10943. <span class="badge badge-q1">JCR Q1</span> <span class="badge badge-cor">Corresponding</span></li>
-            <li><strong>Xue Y</strong>, Zheng F, et al. (2024) A new quality monitoring method for real-time precise orbit and clock products. <em>GPS Solutions</em> 28(3):125. <span class="badge badge-q1">JCR Q1</span></li>
-            <li>Shi C, <strong>Xue Y</strong>, et al. (2023) An adaptive quality monitoring method for real-time ionospheric corrections. <em>GPS Solutions</em>:15. <span class="badge badge-q1">JCR Q1</span> <span class="badge badge-s1">Student 1st</span></li>
-          </ul>
-        </div>
+        <div class="ip-list" id="software-list"></div>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- ===== Publications ===== -->
-<section id="publications">
+<!-- =========================  HONORS  ========================= -->
+<section id="honors" class="reveal">
   <div class="container">
-    <h2 class="section-title">Publications</h2>
-
-    <ul class="pub-list">
-
-      <li class="pub-item">
-        <div class="pub-num">1</div>
-        <div class="pub-body">
-          <div class="pub-title">Space-based Autonomous Timescale Realization for LEO Constellations Enabled by Low SWaP-C Heterogeneous Clock Ensembles and Inter-Satellite Links</div>
-          <div class="pub-authors"><strong>Xue Y</strong>, Zheng F, Zhang D, Chen X, Shi C</div>
-          <div class="pub-venue"><em>IEEE Internet of Things Journal</em>, 2026. <span class="pub-badges"><span class="badge badge-q1">JCR Q1</span></span></div>
-        </div>
-      </li>
-
-      <li class="pub-item">
-        <div class="pub-num">2</div>
-        <div class="pub-body">
-          <div class="pub-title">Characterization and Prediction of Low Earth Orbit Satellite Clock Offsets Based on Fourier Analysis Network</div>
-          <div class="pub-authors"><strong>Xue Y</strong>, Zheng F, Xue K, Shi C, Jing G</div>
-          <div class="pub-venue"><em>Measurement Science and Technology</em> 37(15), 2026. <span class="pub-badges"><span class="badge badge-q1">JCR Q1</span></span></div>
-        </div>
-      </li>
-
-      <li class="pub-item">
-        <div class="pub-num">3</div>
-        <div class="pub-body">
-          <div class="pub-title">Timing Advanced Receiver Autonomous Integrity Monitoring Augmented by BDSBAS</div>
-          <div class="pub-authors"><strong>Xue Y</strong>, Zheng F, et al.</div>
-          <div class="pub-venue"><em>Measurement Science and Technology</em> 36(2):026312, 2025. <span class="pub-badges"><span class="badge badge-q1">JCR Q1</span></span></div>
-        </div>
-      </li>
-
-      <li class="pub-item">
-        <div class="pub-num">4</div>
-        <div class="pub-body">
-          <div class="pub-title">Preliminary Exploration and Verification of Timing Advanced RAIM</div>
-          <div class="pub-authors">Zheng F, <strong>Xue Y*</strong>, et al.</div>
-          <div class="pub-venue"><em>IEEE Transactions on Aerospace and Electronic Systems</em> 61(4):10935–10943, 2025.
-            <span class="pub-badges"><span class="badge badge-q1">JCR Q1</span><span class="badge badge-cor">Corresponding Author</span></span>
-          </div>
-        </div>
-      </li>
-
-      <li class="pub-item">
-        <div class="pub-num">5</div>
-        <div class="pub-body">
-          <div class="pub-title">Online Time Metrology Method Based on Global Navigation Satellite System</div>
-          <div class="pub-authors"><strong>Xue Y</strong>, Zhang D, Zheng F, Shi C, Wang Y, Zhang A</div>
-          <div class="pub-venue"><em>2025 Joint Conf. European Frequency and Time Forum &amp; IEEE IFCS (EFTF/IFCS)</em>, pp 1–3.
-            <span class="pub-badges"><span class="badge badge-ei">EI</span></span>
-          </div>
-        </div>
-      </li>
-
-      <li class="pub-item">
-        <div class="pub-num">6</div>
-        <div class="pub-body">
-          <div class="pub-title">A New Quality Monitoring Method for Real-Time Precise Orbit and Clock Products</div>
-          <div class="pub-authors"><strong>Xue Y</strong>, Zheng F, et al.</div>
-          <div class="pub-venue"><em>GPS Solutions</em> 28(3):125, 2024. <span class="pub-badges"><span class="badge badge-q1">JCR Q1</span></span></div>
-        </div>
-      </li>
-
-      <li class="pub-item">
-        <div class="pub-num">7</div>
-        <div class="pub-body">
-          <div class="pub-title">An Adaptive Quality Monitoring Method for Real-Time Ionospheric Corrections</div>
-          <div class="pub-authors">Shi C, <strong>Xue Y</strong>, et al.</div>
-          <div class="pub-venue"><em>GPS Solutions</em>:15, 2023.
-            <span class="pub-badges"><span class="badge badge-q1">JCR Q1</span><span class="badge badge-s1">Student 1st Author</span></span>
-          </div>
-        </div>
-      </li>
-
-    </ul>
-
-    <div class="pub-other">
-      <strong>Other Research Outputs</strong>
-      <ul>
-        <li>📜 5 National Invention Patents (授权国家发明专利)</li>
-        <li>💾 2 Software Copyrights (软件著作权)</li>
-        <li>🎤 4 Oral Presentations at International Conferences</li>
-      </ul>
-    </div>
-
+    <h2 class="section-title"><span class="hash">#</span> Honors &amp; Awards</h2>
+    <div class="honor-list" id="honor-list"></div>
   </div>
 </section>
 
-<!-- ===== Honors ===== -->
-<section id="honors">
+<!-- =========================  EDUCATION  ========================= -->
+<section id="education" class="reveal">
   <div class="container">
-    <h2 class="section-title">Honors &amp; Awards</h2>
-    <ul class="honors-list">
-
-      <li class="honor-item">
-        <div class="honor-icon">★</div>
-        <div class="honor-body">
-          <div class="honor-title">2025 CAST Young Talent Cultivation Program – PhD Special Track</div>
-          <div class="honor-sub">中国科协青年人才培育工程博士生专项计划 · 2025</div>
-        </div>
-      </li>
-
-      <li class="honor-item">
-        <div class="honor-icon">★</div>
-        <div class="honor-body">
-          <div class="honor-title">Outstanding Graduate Student, Beihang University</div>
-          <div class="honor-sub">北京航空航天大学优秀研究生 · 2025</div>
-        </div>
-      </li>
-
-      <li class="honor-item">
-        <div class="honor-icon">★</div>
-        <div class="honor-body">
-          <div class="honor-title">National 2nd Place – 13th China Innovation &amp; Entrepreneurship Competition, Beidou Application Track</div>
-          <div class="honor-sub">第十三届中国创新创业大赛北斗应用赛全国第二名</div>
-        </div>
-      </li>
-
-      <li class="honor-item">
-        <div class="honor-icon">★</div>
-        <div class="honor-body">
-          <div class="honor-title">National 2nd Prize – 3rd Central Enterprise Innovation &amp; Creativity Competition</div>
-          <div class="honor-sub">第三届中央企业熠星创新创意大赛全国二等奖</div>
-        </div>
-      </li>
-
-      <li class="honor-item">
-        <div class="honor-icon">★</div>
-        <div class="honor-body">
-          <div class="honor-title">National Excellence Award – 4th "Beidou+" Innovation &amp; Entrepreneurship Competition</div>
-          <div class="honor-sub">第四届"北斗+"创新创业大赛全国优秀奖</div>
-        </div>
-      </li>
-
-      <li class="honor-item">
-        <div class="honor-icon">★</div>
-        <div class="honor-body">
-          <div class="honor-title">Outstanding Graduate, Beihang University</div>
-          <div class="honor-sub">北京航空航天大学优秀毕业生 · 2023</div>
-        </div>
-      </li>
-
-      <li class="honor-item">
-        <div class="honor-icon">★</div>
-        <div class="honor-body">
-          <div class="honor-title">Three-Good Student, Beihang University</div>
-          <div class="honor-sub">北京航空航天大学三好学生 · 2022</div>
-        </div>
-      </li>
-
-    </ul>
-  </div>
-</section>
-
-<!-- ===== Contact ===== -->
-<section id="contact">
-  <div class="container">
-    <h2 class="section-title">Contact</h2>
-    <div class="contact-grid">
-
-      <div class="contact-card">
-        <div class="contact-card-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        </div>
-        <div>
-          <div class="contact-card-label">Email</div>
-          <div class="contact-card-val"><a href="mailto:xueyu@buaa.edu.cn">xueyu@buaa.edu.cn</a></div>
-        </div>
-      </div>
-
-      <div class="contact-card">
-        <div class="contact-card-icon">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-        </div>
-        <div>
-          <div class="contact-card-label">GitHub</div>
-          <div class="contact-card-val"><a href="https://github.com/Xsleet" target="_blank" rel="noopener">github.com/Xsleet</a></div>
-        </div>
-      </div>
-
-      <div class="contact-card" style="grid-column: 1 / -1;">
-        <div class="contact-card-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        </div>
-        <div>
-          <div class="contact-card-label">Address</div>
-          <div class="contact-card-val">School of Electronics and Information Engineering, Beihang University, Beijing 100191, China</div>
-        </div>
-      </div>
-
-    </div>
+    <h2 class="section-title"><span class="hash">#</span> Education</h2>
+    <div class="edu-list" id="edu-list"></div>
   </div>
 </section>
 
 </main>
 
-<footer>
-  <p>&copy; 2026 Yu Xue (薛宇) · Beihang University · Built with ❤️ for academic sharing</p>
+<!-- =========================  FOOTER  ========================= -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div>© 2026 Yu Xue · Last updated <script>document.write(new Date().toISOString().slice(0,10))</script></div>
+      <div class="footer-contact">
+        <a id="footer-email" href=""></a>
+        <a id="footer-github" href="" target="_blank" rel="noopener"></a>
+      </div>
+    </div>
+  </div>
 </footer>
 
-<script>
-  // Active nav link on scroll
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-links a');
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        navLinks.forEach(a => a.classList.remove('active'));
-        const active = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
-        if (active) active.classList.add('active');
-      }
-    });
-  }, { rootMargin: '-40% 0px -55% 0px' });
-  sections.forEach(s => observer.observe(s));
-</script>
+<div id="toast" class="toast"></div>
 
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
 </body>
 </html>
