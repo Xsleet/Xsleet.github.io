@@ -13,10 +13,10 @@
     mail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>',
     github: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.57.1.78-.25.78-.55 0-.27-.01-1.17-.02-2.12-3.2.7-3.87-1.36-3.87-1.36-.52-1.32-1.27-1.68-1.27-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.69 1.24 3.35.95.1-.74.4-1.25.73-1.54-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.18 1.18.92-.26 1.91-.39 2.89-.39.98 0 1.97.13 2.89.39 2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.23 2.75.11 3.04.74.81 1.18 1.83 1.18 3.09 0 4.43-2.69 5.4-5.26 5.68.41.36.78 1.05.78 2.12 0 1.53-.01 2.77-.01 3.15 0 .31.21.66.79.55 4.56-1.52 7.85-5.83 7.85-10.91C23.5 5.73 18.27.5 12 .5Z"/></svg>',
     scholar: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>',
-    orcid: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zM7.37 18.5H5.518V7.573h1.852V18.5zm-.931-12.3a1.062 1.062 0 1 1 0-2.124 1.062 1.062 0 0 1 0 2.124zM18.5 18.5h-1.82v-5.37c0-1.28-.025-2.93-1.785-2.93-1.79 0-2.064 1.394-2.064 2.838V18.5h-1.822V7.573h1.75v1.494h.026c.242-.46.84-.945 1.728-.945 1.846 0 2.186 1.216 2.186 2.797V18.5h.001z"/></svg>',
     link: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>',
     doi: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h.01M12 12h.01M16 12h.01"/></svg>',
     copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',
+    chevron: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>',
     shield: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>',
     satellite: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 7 9 3 5 7l4 4"/><path d="m17 11 4 4-4 4-4-4"/><path d="m8 12 4 4"/><path d="m16 8 3-3"/><path d="M9 21a6 6 0 0 0-6-6"/></svg>',
     clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>',
@@ -38,11 +38,10 @@
   let LANG = localStorage.getItem('lang') ||
              (navigator.language && navigator.language.startsWith('zh') ? 'cn' : 'en');
 
-  // Translate: accept a string, {en,cn}, or path like "section.news"
+  // Translate: accepts a string, an {en,cn} object, or a dotted i18n path
   const t = (val) => {
     if (val == null) return '';
     if (typeof val === 'string') {
-      // Support dotted i18n key
       if (val.indexOf('.') > -1) {
         const parts = val.split('.');
         let cur = data.ui;
@@ -67,11 +66,11 @@
     ul.innerHTML = '';
     const items = [
       { id: 'news',         key: 'nav.news' },
+      { id: 'education',    key: 'nav.education' },
       { id: 'research',     key: 'nav.research' },
       { id: 'publications', key: 'nav.pubs' },
       { id: 'patents',      key: 'nav.patents' },
-      { id: 'honors',       key: 'nav.honors' },
-      { id: 'education',    key: 'nav.education' }
+      { id: 'honors',       key: 'nav.honors' }
     ];
     items.forEach(it => {
       const li = el('li');
@@ -92,10 +91,10 @@
     q('#profile-position').textContent = t(p.position);
     q('#profile-affil').textContent = t(p.affiliation);
     q('#profile-lab').innerHTML = t(p.lab);
-    q('#profile-advisor').innerHTML =
-      `<strong>${t(data.ui.common.advisedBy)}:</strong> ${t(p.advisor)}`;
+    q('#advisor-label').textContent = t(data.ui.common.advisedBy);
+    q('#profile-advisor').innerHTML = t(p.advisor);
 
-    q('#profile-bio').innerHTML = p.bio.map(b => `<p>${t(b)}</p>`).join('');
+    q('#profile-bio').innerHTML = `<p>${t(p.bio)}</p>`;
 
     const c = q('#profile-contact');
     c.innerHTML = '';
@@ -109,7 +108,6 @@
     add('mailto:' + p.email, ICON.mail, p.email);
     add(p.github, ICON.github, 'GitHub');
     if (p.scholar) add(p.scholar, ICON.scholar, 'Google Scholar');
-    if (p.orcid) add(p.orcid, ICON.orcid, 'ORCID');
   }
 
   /* ---------- Render: News ---------- */
@@ -131,42 +129,109 @@
         list.appendChild(row);
       });
     };
-    paint(expanded ? items.length : SHOW);
+    paint(SHOW);
 
-    const btn = q('#news-toggle');
+    let btn = q('#news-toggle');
     if (items.length <= SHOW) { btn.style.display = 'none'; return; }
     btn.style.display = '';
+    const newBtn = btn.cloneNode(true);
+    btn.parentNode.replaceChild(newBtn, btn);
+    btn = newBtn;
 
     const setBtn = () => {
       const tpl = expanded ? data.ui.news.showFewer : data.ui.news.showAll;
       btn.textContent = (tpl[LANG] || tpl.en).replace('{n}', items.length);
     };
     setBtn();
-
-    // Replace handler each render to avoid stale closures
-    const newBtn = btn.cloneNode(true);
-    btn.parentNode.replaceChild(newBtn, btn);
-    newBtn.addEventListener('click', () => {
+    btn.addEventListener('click', () => {
       expanded = !expanded;
       paint(expanded ? items.length : SHOW);
-      const tpl = expanded ? data.ui.news.showFewer : data.ui.news.showAll;
-      newBtn.textContent = (tpl[LANG] || tpl.en).replace('{n}', items.length);
+      setBtn();
     });
   }
 
-  /* ---------- Render: Research ---------- */
-  function renderResearch() {
-    const wrap = q('#research-grid');
+  /* ---------- Render: Education ---------- */
+  function renderEdu() {
+    const wrap = q('#edu-list');
     wrap.innerHTML = '';
+    data.education.forEach(e => {
+      const it = el('div', 'edu-item');
+      it.innerHTML = `
+        <div class="edu-school">${t(e.school)}</div>
+        <div class="edu-degree">${t(e.degree)}</div>
+        <div class="edu-period-row">
+          <span class="edu-period">${e.period}</span>
+          <span class="edu-note">${t(e.note)}</span>
+        </div>`;
+      wrap.appendChild(it);
+    });
+  }
+
+  /* ---------- Render: Research (vertical, with linked work) ---------- */
+  function renderResearch() {
+    const wrap = q('#research-list');
+    wrap.innerHTML = '';
+
     data.research.forEach(r => {
-      const c = el('div', 'research-card');
+      const c = el('article', 'research-card');
+      const relPubs = data.publications.filter(p => p.theme === r.id);
+      const relPatents = data.patents.filter(p => p.theme === r.id);
+
+      const pubsHtml = relPubs.length ? `
+        <div class="research-links-block">
+          <div class="research-links-label">${t('research.relPubs')} · ${relPubs.length}</div>
+          ${relPubs.map(p => `
+            <a class="related-item" data-target="pub-${p.key}">
+              <span class="yr">${p.year}</span>
+              <span>${p.shortTitle || p.title}<span class="arrow">→</span></span>
+            </a>`).join('')}
+        </div>` : '';
+
+      const patentsHtml = relPatents.length ? `
+        <div class="research-links-block">
+          <div class="research-links-label">${t('research.relPatents')} · ${relPatents.length}</div>
+          ${relPatents.map(p => `
+            <a class="related-item" data-target="patent-${p.key}">
+              <span class="yr">${p.date}</span>
+              <span>${t(p.title)}<span class="arrow">→</span></span>
+            </a>`).join('')}
+        </div>` : '';
+
       c.innerHTML = `
-        <div class="research-icon">${ICON[r.icon] || ICON.shield}</div>
-        <h3 class="research-title">${t(r.title)}</h3>
+        <div class="research-head">
+          <div class="research-icon">${ICON[r.icon] || ICON.shield}</div>
+          <div class="research-title-wrap">
+            <div class="research-title">${t(r.title)}</div>
+            <div class="research-tagline">${t(r.tagline)}</div>
+          </div>
+        </div>
         <p class="research-summary">${t(r.summary)}</p>
         <div class="research-keywords">
           ${r.keywords.map(k => `<span class="kw">${k}</span>`).join('')}
-        </div>`;
+        </div>
+        ${(pubsHtml || patentsHtml) ? `<div class="research-links">${pubsHtml}${patentsHtml}</div>` : ''}
+      `;
+
+      // Click related → scroll + highlight
+      c.querySelectorAll('.related-item').forEach(link => {
+        link.addEventListener('click', (ev) => {
+          ev.preventDefault();
+          const targetId = link.dataset.target;
+          const target = document.getElementById(targetId);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            // Brief highlight flash
+            target.classList.remove('highlight-target');
+            void target.offsetWidth; // restart animation
+            target.classList.add('highlight-target');
+            // Auto-expand abstract if it's a patent or publication with abstract
+            if (target.classList.contains('patent-item') || target.classList.contains('pub-item')) {
+              target.classList.add('expanded');
+            }
+          }
+        });
+      });
+
       wrap.appendChild(c);
     });
   }
@@ -199,6 +264,7 @@
 
     data.publications.forEach(p => {
       const item = el('article', 'pub-item');
+      item.id = `pub-${p.key}`;
       item.dataset.year = p.year;
       item.dataset.role = p.role;
       item.dataset.type = p.type;
@@ -292,33 +358,41 @@
     });
   }
 
-  /* ---------- Render: Patents / Software ---------- */
-  function renderIp() {
-    const pWrap = q('#patent-list');
-    pWrap.innerHTML = '';
+  /* ---------- Render: Patents (single column, click to expand) ---------- */
+  function renderPatents() {
+    const wrap = q('#patent-list');
+    wrap.innerHTML = '';
     data.patents.forEach(p => {
-      const it = el('div', 'ip-item');
+      const it = el('article', 'patent-item');
+      it.id = `patent-${p.key}`;
       it.innerHTML = `
-        <div class="ip-title">${t(p.title)}</div>
-        <div class="ip-meta">
-          <span class="year">${p.date}</span> · ${p.number} · ${p.inventors.join(', ')}
-        </div>`;
-      pWrap.appendChild(it);
+        <div class="patent-head">
+          <div class="patent-head-text">
+            <div class="patent-title">${t(p.title)}</div>
+            <div class="patent-meta">
+              <span class="yr">${p.date}</span>
+              <span class="num">${p.number}</span>
+              · ${p.inventors.join(', ')}
+            </div>
+          </div>
+          <div class="patent-toggle">${ICON.chevron}</div>
+        </div>
+        ${p.abstract ? `
+          <div class="patent-abstract">
+            <div class="patent-abstract-label">${t('patents.abstract')}</div>
+            ${t(p.abstract)}
+          </div>` : ''}
+      `;
+      const head = it.querySelector('.patent-head');
+      if (p.abstract) {
+        head.addEventListener('click', () => it.classList.toggle('expanded'));
+      } else {
+        head.style.cursor = 'default';
+        const tg = it.querySelector('.patent-toggle');
+        if (tg) tg.style.display = 'none';
+      }
+      wrap.appendChild(it);
     });
-    q('#patent-count').textContent = `${data.patents.length} ${t('patents.items')}`;
-
-    const sWrap = q('#software-list');
-    sWrap.innerHTML = '';
-    data.software.forEach(s => {
-      const it = el('div', 'ip-item');
-      it.innerHTML = `
-        <div class="ip-title">${t(s.title)}</div>
-        <div class="ip-meta">
-          <span class="year">${s.year}</span> · ${s.number}
-        </div>`;
-      sWrap.appendChild(it);
-    });
-    q('#software-count').textContent = `${data.software.length} ${t('patents.items')}`;
   }
 
   /* ---------- Render: Honors ---------- */
@@ -331,23 +405,6 @@
       it.innerHTML = `
         <span class="honor-year">${h.year}</span>
         <div class="honor-body">${text}</div>`;
-      wrap.appendChild(it);
-    });
-  }
-
-  /* ---------- Render: Education ---------- */
-  function renderEdu() {
-    const wrap = q('#edu-list');
-    wrap.innerHTML = '';
-    data.education.forEach(e => {
-      const it = el('div', 'edu-item');
-      it.innerHTML = `
-        <div class="edu-school">${t(e.school)}</div>
-        <div class="edu-degree">${t(e.degree)}</div>
-        <div class="edu-period-row">
-          <span class="edu-period">${e.period}</span>
-          <span class="edu-note">${t(e.note)}</span>
-        </div>`;
       wrap.appendChild(it);
     });
   }
@@ -397,7 +454,7 @@
     toast._t = setTimeout(() => t.classList.remove('show'), 1800);
   }
 
-  /* ---------- Scroll spy (nav highlight) ---------- */
+  /* ---------- Scroll spy ---------- */
   function initScrollSpy() {
     const sections = qa('section[id]');
     const io = new IntersectionObserver((entries) => {
@@ -423,17 +480,17 @@
     items.forEach(i => io.observe(i));
   }
 
-  /* ---------- Render All (re-renders everything for lang switch) ---------- */
+  /* ---------- Render All ---------- */
   function renderAll() {
     applyStaticI18n();
     renderNav();
     renderSidebar();
     renderNews();
+    renderEdu();
     renderResearch();
     renderPublications();
-    renderIp();
+    renderPatents();
     renderHonors();
-    renderEdu();
   }
 
   /* ---------- Init ---------- */

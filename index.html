@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="assets/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 </head>
 <body>
 
@@ -30,45 +30,66 @@
 <!-- =========================  TWO-COLUMN LAYOUT  ========================= -->
 <div class="layout" id="top">
 
-  <!-- ===== Sidebar (sticky, always visible) ===== -->
+  <!-- ===== Sticky Sidebar ===== -->
   <aside class="sidebar">
     <div class="sidebar-photo">
       <img id="profile-photo" src="" alt="Yu Xue" />
     </div>
 
-    <div>
-      <div class="sidebar-name">
-        <span id="profile-name-en">Yu Xue</span>
-        <span class="cn" id="profile-name-cn">薛宇</span>
-      </div>
-      <div class="sidebar-position" id="profile-position"></div>
-      <div class="sidebar-affil" id="profile-affil"></div>
+    <div class="sidebar-name">
+      <span id="profile-name-en">Yu Xue</span>
+      <span class="sidebar-name-cn" id="profile-name-cn">薛宇</span>
     </div>
 
-    <div>
-      <div class="sidebar-lab" id="profile-lab"></div>
-      <div class="sidebar-advisor" id="profile-advisor"></div>
+    <div class="sidebar-line">
+      <span class="pos" id="profile-position"></span>
+      <span class="at">@</span>
+      <span class="inst" id="profile-affil"></span>
     </div>
+
+    <div class="sidebar-meta">
+      <div class="sidebar-meta-row">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 22a8 8 0 0 1 16 0"/><circle cx="10" cy="8" r="5"/><path d="M22 12a4 4 0 0 0-4-4"/><path d="M22 22a4 4 0 0 0-4-4"/></svg>
+        <span id="profile-lab"></span>
+      </div>
+      <div class="sidebar-meta-row">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m22 11-3 3-2-2"/></svg>
+        <span><span id="advisor-label"></span>: <strong id="profile-advisor"></strong></span>
+      </div>
+    </div>
+
+    <div class="sidebar-divider"></div>
 
     <div class="sidebar-bio" id="profile-bio"></div>
+
+    <div class="sidebar-divider"></div>
 
     <div class="sidebar-contact" id="profile-contact"></div>
   </aside>
 
-  <!-- ===== Main Content (right column) ===== -->
+  <!-- ===== Main Content ===== -->
   <main class="main-content">
 
+    <!-- News -->
     <section id="news" class="reveal">
       <h2 class="section-title"><span class="hash">#</span> <span data-i18n="section.news"></span></h2>
       <div class="news-list" id="news-list"></div>
       <button class="news-toggle-btn" id="news-toggle"></button>
     </section>
 
-    <section id="research" class="reveal">
-      <h2 class="section-title"><span class="hash">#</span> <span data-i18n="section.research"></span></h2>
-      <div class="research-grid" id="research-grid"></div>
+    <!-- Education (moved up) -->
+    <section id="education" class="reveal">
+      <h2 class="section-title"><span class="hash">#</span> <span data-i18n="section.education"></span></h2>
+      <div class="edu-list" id="edu-list"></div>
     </section>
 
+    <!-- Research (vertical cards with linked work) -->
+    <section id="research" class="reveal">
+      <h2 class="section-title"><span class="hash">#</span> <span data-i18n="section.research"></span></h2>
+      <div class="research-list" id="research-list"></div>
+    </section>
+
+    <!-- Publications -->
     <section id="publications" class="reveal">
       <h2 class="section-title"><span class="hash">#</span> <span data-i18n="section.pubs"></span></h2>
       <div class="pub-filter">
@@ -84,34 +105,16 @@
       <div class="pub-list" id="pub-list"></div>
     </section>
 
+    <!-- Patents (single column, click to expand) -->
     <section id="patents" class="reveal">
       <h2 class="section-title"><span class="hash">#</span> <span data-i18n="section.patents"></span></h2>
-      <div class="two-col">
-        <div>
-          <div class="subsection-title">
-            <span data-i18n="patents.invention"></span>
-            <span class="count" id="patent-count"></span>
-          </div>
-          <div class="ip-list" id="patent-list"></div>
-        </div>
-        <div>
-          <div class="subsection-title">
-            <span data-i18n="patents.software"></span>
-            <span class="count" id="software-count"></span>
-          </div>
-          <div class="ip-list" id="software-list"></div>
-        </div>
-      </div>
+      <div class="patent-list" id="patent-list"></div>
     </section>
 
+    <!-- Honors -->
     <section id="honors" class="reveal">
       <h2 class="section-title"><span class="hash">#</span> <span data-i18n="section.honors"></span></h2>
       <div class="honor-list" id="honor-list"></div>
-    </section>
-
-    <section id="education" class="reveal">
-      <h2 class="section-title"><span class="hash">#</span> <span data-i18n="section.education"></span></h2>
-      <div class="edu-list" id="edu-list"></div>
     </section>
 
     <footer class="footer">
