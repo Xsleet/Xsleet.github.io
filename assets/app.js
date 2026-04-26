@@ -21,7 +21,16 @@
     satellite: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 7 9 3 5 7l4 4"/><path d="m17 11 4 4-4 4-4-4"/><path d="m8 12 4 4"/><path d="m16 8 3-3"/><path d="M9 21a6 6 0 0 0-6-6"/></svg>',
     clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>',
     sun: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>',
-    moon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'
+    moon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>',
+    trophy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>',
+    mic: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>',
+    pin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>'
+  };
+
+  /* ---------- Date formatter (clip YYYY-MM-DD → YYYY-MM) ---------- */
+  const fmtMonth = (d) => {
+    if (typeof d !== 'string') return '';
+    return /^\d{4}-\d{2}/.test(d) ? d.slice(0, 7) : d;
   };
 
   /* ---------- Utilities ---------- */
@@ -69,6 +78,7 @@
       { id: 'education',    key: 'nav.education' },
       { id: 'research',     key: 'nav.research' },
       { id: 'publications', key: 'nav.pubs' },
+      { id: 'talks',        key: 'nav.talks' },
       { id: 'patents',      key: 'nav.patents' },
       { id: 'honors',       key: 'nav.honors' }
     ];
@@ -110,23 +120,119 @@
     if (p.scholar) add(p.scholar, ICON.scholar, 'Google Scholar');
   }
 
+  /* ---------- Build: News (auto-derived from publications + talks + patents + honors) ---------- */
+  function buildNews() {
+    const tpl = data.ui.news;
+    // Substitute placeholders per-language. `vars[k]` may be a plain string
+    // (same value into both en/cn) or a bilingual {en,cn} object.
+    const fmt = (templ, vars) => {
+      const sel = (v, lang) => {
+        if (v == null) return '';
+        if (typeof v === 'object') return v[lang] || v.en || v.cn || '';
+        return String(v);
+      };
+      let en = templ.en, cn = templ.cn;
+      Object.keys(vars).forEach(k => {
+        const re = new RegExp('\\{' + k + '\\}', 'g');
+        en = en.replace(re, sel(vars[k], 'en'));
+        cn = cn.replace(re, sel(vars[k], 'cn'));
+      });
+      return { en, cn };
+    };
+
+    const items = [];
+
+    // Only month-precision (or finer) dates surface in News.
+    const hasMonth = (d) => typeof d === 'string' && /^\d{4}-\d{2}/.test(d);
+    const ymd = (d) => d.slice(0, 7);  // normalize to YYYY-MM for sorting
+
+    // Conference papers are skipped here — talks come from `data.talks` below.
+    data.publications.forEach(p => {
+      if (!hasMonth(p.date)) return;
+      if (p.type === 'conference') return;
+      const title = p.shortTitle || p.title;
+      let templ, tag;
+      if (p.status === 'accepted')        { templ = tpl.paperAccepted;  tag = 'paper'; }
+      else if (p.role === 'coauthor')     { templ = tpl.paperCoauthor;  tag = 'paper'; }
+      else                                { templ = tpl.paperPublished; tag = 'paper'; }
+      const text = fmt(templ, { title, venue: p.venue });
+      items.push({ date: ymd(p.date), tag, link: `pub-${p.key}`, en: text.en, cn: text.cn });
+    });
+
+    // Talks — each entry in `data.talks` becomes a "talk" news item.
+    data.talks.forEach(tk => {
+      if (!hasMonth(tk.date)) return;
+      const text = fmt(tpl.talkPresented, { title: tk.title, venue: tk.venue });
+      items.push({ date: ymd(tk.date), tag: 'talk', link: 'talks', en: text.en, cn: text.cn });
+    });
+
+    // Patents — a real `number` (starts with "ZL" or "CN" digits) → granted; placeholder → filed.
+    const isGranted = (num) => typeof num === 'string' && /^(ZL|CN)\s*\d/.test(num);
+    data.patents.forEach(p => {
+      if (!hasMonth(p.date)) return;
+      const granted = isGranted(p.number);
+      const templ = granted ? tpl.patentGranted : tpl.patentFiled;
+      const text = fmt(templ, { title: p.title, number: p.number || '' });
+      items.push({ date: ymd(p.date), tag: 'patent', link: `patent-${p.key}`, en: text.en, cn: text.cn });
+    });
+
+    data.honors.forEach(h => {
+      if (!hasMonth(h.date)) return;
+      const templ = h.kind === 'selected' ? tpl.honorSelected : tpl.honorAwarded;
+      const text = fmt(templ, { name: { en: h.en, cn: h.cn } });
+      items.push({ date: ymd(h.date), tag: 'honor', link: 'honors', en: text.en, cn: text.cn });
+    });
+
+    // Manual entries written directly in data.news[] are merged in as-is.
+    (data.news || []).forEach(n => {
+      if (!hasMonth(n.date)) return;
+      items.push({
+        date: ymd(n.date),
+        tag: n.tag || 'news',
+        link: n.link,
+        en: n.en || n.cn || '',
+        cn: n.cn || n.en || ''
+      });
+    });
+
+    items.sort((a, b) => b.date.localeCompare(a.date));
+    return items;
+  }
+
   /* ---------- Render: News ---------- */
   function renderNews() {
     const list = q('#news-list');
-    const items = data.news;
+    const items = buildNews();
     const SHOW = 5;
     let expanded = false;
 
     const paint = (n) => {
       list.innerHTML = '';
       items.slice(0, n).forEach(it => {
-        const row = el('div', 'news-item');
+        const linked = !!it.link;
+        const row = el('div', 'news-item' + (linked ? ' is-linked' : ''));
+        if (linked) row.dataset.target = it.link;
         const text = it[LANG] || it.en;
         row.innerHTML = `
           <span class="news-date">${it.date}</span>
           <span class="news-tag" data-tag="${it.tag}">${it.tag[0].toUpperCase()}</span>
-          <span class="news-text">${text}</span>`;
+          <span class="news-text">${text}</span>
+          ${linked ? '<span class="news-arrow" aria-hidden="true">›</span>' : '<span class="news-arrow-spacer" aria-hidden="true"></span>'}`;
         list.appendChild(row);
+      });
+      list.querySelectorAll('.news-item.is-linked').forEach(row => {
+        row.addEventListener('click', () => {
+          const tgt = document.getElementById(row.dataset.target);
+          if (!tgt) return;
+          const isItem = tgt.classList.contains('pub-item') || tgt.classList.contains('patent-item');
+          tgt.scrollIntoView({ behavior: 'smooth', block: isItem ? 'center' : 'start' });
+          if (isItem) {
+            tgt.classList.remove('highlight-target');
+            void tgt.offsetWidth;
+            tgt.classList.add('highlight-target');
+            tgt.classList.add('expanded');
+          }
+        });
       });
     };
     paint(SHOW);
@@ -155,14 +261,27 @@
     const wrap = q('#edu-list');
     wrap.innerHTML = '';
     data.education.forEach(e => {
-      const it = el('div', 'edu-item');
+      const periodStr = t(e.period);
+      const isPresent = /Present|至今/i.test(periodStr);
+      const it = el('div', 'edu-item' + (isPresent ? ' is-current' : ''));
+      const schoolName = t(e.school);
+      const [degLevel, ...rest] = t(e.degree).split(/\s*·\s*/);
+      const degMajor = rest.join(' · ');
       it.innerHTML = `
-        <div class="edu-school">${t(e.school)}</div>
-        <div class="edu-degree">${t(e.degree)}</div>
-        <div class="edu-period-row">
-          <span class="edu-period">${e.period}</span>
-          <span class="edu-note">${t(e.note)}</span>
-        </div>`;
+        <div class="edu-logo-wrap">
+          ${e.logo ? `<img class="edu-logo" src="${e.logo}" alt="${schoolName}">` : ''}
+        </div>
+        <div class="edu-main">
+          <h3 class="edu-school">${schoolName}</h3>
+          <div class="edu-major">${degMajor}</div>
+        </div>
+        <div class="edu-aside">
+          <span class="edu-deg-badge">${degLevel}</span>
+          <div class="edu-meta">
+            <span class="edu-period">${periodStr}</span>
+          </div>
+        </div>
+        <span class="edu-note" style="display:none">${e.note ? t(e.note) : ''}</span>`;
       wrap.appendChild(it);
     });
   }
@@ -192,7 +311,7 @@
           <div class="research-links-label">${t('research.relPatents')} · ${relPatents.length}</div>
           ${relPatents.map(p => `
             <a class="related-item" data-target="patent-${p.key}">
-              <span class="yr">${p.date}</span>
+              <span class="yr">${(p.date || '').slice(0, 4) || p.date}</span>
               <span>${t(p.title)}<span class="arrow">→</span></span>
             </a>`).join('')}
         </div>` : '';
@@ -207,7 +326,7 @@
         </div>
         <p class="research-summary">${t(r.summary)}</p>
         <div class="research-keywords">
-          ${r.keywords.map(k => `<span class="kw">${k}</span>`).join('')}
+          ${r.keywords.map(k => `<span class="kw">${t(k)}</span>`).join('')}
         </div>
         ${(pubsHtml || patentsHtml) ? `<div class="research-links">${pubsHtml}${patentsHtml}</div>` : ''}
       `;
@@ -269,7 +388,8 @@
       item.dataset.role = p.role;
       item.dataset.type = p.type;
 
-      const badgesHtml = (p.badges || []).map(b => {
+      const PUBLISHER_RE = /^(IEEE|IOP|Springer|Elsevier|Wiley|Nature|Taylor|MDPI|ACM|AGU|AIP|RSC|SPIE)$/i;
+      const badgesHtml = (p.badges || []).filter(b => !PUBLISHER_RE.test(b)).map(b => {
         let cls = '';
         if (/Q1/i.test(b)) cls = 'q1';
         else if (/^EI$/i.test(b)) cls = 'ei';
@@ -284,24 +404,26 @@
       }).join(', ');
 
       item.innerHTML = `
-        <div>
-          <span class="pub-year-badge">${p.year}</span>
-          <span class="pub-title">${p.title}</span>
+        <div class="pub-head">
+          <div class="pub-head-text">
+            <span class="pub-year-badge">${fmtMonth(p.date) || p.year}</span>
+            <span class="pub-title">${p.title}</span>
+          </div>
+          ${p.abstract ? `<div class="pub-toggle" aria-label="${t('pubs.abstract')}">${ICON.chevron}</div>` : ''}
         </div>
         <div class="pub-meta">${authorsStr}. <em>${p.venue}</em>${p.volume ? `, ${p.volume}` : ''}.
           <span class="pub-badges">${badgesHtml}</span>
         </div>
         <div class="pub-actions">
-          ${p.url ? `<a class="pub-action" href="${p.url}" target="_blank" rel="noopener">${ICON.link} ${t('pubs.paper')}</a>` : ''}
           ${p.doi ? `<a class="pub-action" href="https://doi.org/${p.doi}" target="_blank" rel="noopener">${ICON.doi} ${t('pubs.doi')}</a>` : ''}
           <button class="pub-action pub-bibtex" data-key="${p.key}">${ICON.copy} ${t('pubs.bibtex')}</button>
         </div>
         ${p.abstract ? `<div class="pub-abstract"><strong>${t('pubs.abstract')}</strong> ${p.abstract}</div>` : ''}
       `;
 
-      const titleEl = item.querySelector('.pub-title');
+      const headEl = item.querySelector('.pub-head');
       if (p.abstract) {
-        titleEl.addEventListener('click', () => item.classList.toggle('expanded'));
+        headEl.addEventListener('click', () => item.classList.toggle('expanded'));
       }
 
       const bibBtn = item.querySelector('.pub-bibtex');
@@ -370,9 +492,9 @@
           <div class="patent-head-text">
             <div class="patent-title">${t(p.title)}</div>
             <div class="patent-meta">
-              <span class="yr">${p.date}</span>
+              <span class="yr">${fmtMonth(p.date) || p.date}</span>
               <span class="num">${p.number}</span>
-              · ${p.inventors.join(', ')}
+              · ${p.inventors.map(t).join(', ')}
             </div>
           </div>
           <div class="patent-toggle">${ICON.chevron}</div>
@@ -395,15 +517,47 @@
     });
   }
 
+  /* ---------- Render: Talks (display-only, newest first) ---------- */
+  function renderTalks() {
+    const wrap = q('#talk-list');
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    const sorted = [...(data.talks || [])].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+    sorted.forEach(tk => {
+      const it = el('article', 'talk-item');
+      const loc = tk.location ? t(tk.location) : '';
+      it.innerHTML = `
+        <div class="talk-date-pill">
+          <span class="talk-date-icon">${ICON.mic}</span>
+          <span class="talk-date-text">${fmtMonth(tk.date)}</span>
+        </div>
+        <div class="talk-body">
+          <div class="talk-title">${t(tk.title)}</div>
+          <div class="talk-meta">
+            <em class="talk-venue">${t(tk.venue)}</em>
+            ${loc ? `<span class="talk-loc">${ICON.pin}${loc}</span>` : ''}
+            <span class="talk-kind">${t('talks.oral')}</span>
+          </div>
+        </div>`;
+      wrap.appendChild(it);
+    });
+  }
+
   /* ---------- Render: Honors ---------- */
   function renderHonors() {
     const wrap = q('#honor-list');
     wrap.innerHTML = '';
+    const variant = (h) => {
+      if (h.kind === 'selected') return 'selected';
+      return 'awarded';
+    };
     data.honors.forEach(h => {
-      const it = el('div', 'honor-item');
+      const it = el('article', 'honor-item honor-' + variant(h));
       const text = h[LANG] || h.en;
+      const when = fmtMonth(h.date) || h.year;
       it.innerHTML = `
-        <span class="honor-year">${h.year}</span>
+        <div class="honor-icon">${ICON.trophy}</div>
+        <div class="honor-time">${when}</div>
         <div class="honor-body">${text}</div>`;
       wrap.appendChild(it);
     });
@@ -489,6 +643,7 @@
     renderEdu();
     renderResearch();
     renderPublications();
+    renderTalks();
     renderPatents();
     renderHonors();
   }
