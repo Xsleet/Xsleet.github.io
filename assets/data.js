@@ -69,6 +69,12 @@ window.SITE_DATA = {
                         cn: "论文 <em>{title}</em> 被 <strong>{venue}</strong> 期刊录用。" },
       paperCoauthor:  { en: "Co-authored paper <em>{title}</em> published in <strong>{venue}</strong>.",
                         cn: "合作论文 <em>{title}</em> 在 <strong>{venue}</strong> 期刊发表。" },
+      paperConference: {
+                        en: "Paper <em>{title}</em> presented at <strong>{venue}</strong>.",
+                        cn: "论文 <em>{title}</em> 在 <strong>{venue}</strong> 会议发表。" },
+      paperConferenceCoauthor: {
+                        en: "Co-authored paper <em>{title}</em> presented at <strong>{venue}</strong>.",
+                        cn: "合作论文 <em>{title}</em> 在 <strong>{venue}</strong> 会议发表。" },
       talkPresented:  { en: "Oral presentation <em>{title}</em> at <strong>{venue}</strong>.",
                         cn: "在 <strong>{venue}</strong> 作 <em>{title}</em> 主题口头报告。" },
       honorAwarded:   { en: "Awarded <strong>{name}</strong>.",
@@ -154,15 +160,18 @@ window.SITE_DATA = {
 
   /* ----------  News Timeline ----------
    *  News list = manual entries below + auto-derived items from
-   *  `publications` / `patents` / `honors` (see buildNews() in app.js).
-   *  An auto-derived item appears in News iff its source has a `date`
-   *  starting with "YYYY-MM".
+   *  `publications` / `talks` / `patents` / `honors` (see buildNews() in
+   *  app.js). An auto-derived item appears iff its source has a `date`
+   *  starting with "YYYY-MM". Papers and talks are independent: a single
+   *  conference can yield BOTH a paper entry and a talk entry.
    *  Auto rules:
    *    Publications — pick template from `type`/`status`/`role`:
-   *      type === "conference"          → "Oral presentation at {venue}"
-   *      status === "accepted"          → "Paper {title} accepted by {venue}"
-   *      role === "coauthor"            → "Co-authored paper {title} published in {venue}"
-   *      default                        → "Paper {title} published in {venue}"
+   *      type === "conference" + coauthor → "Co-authored paper {title} presented at {venue}"
+   *      type === "conference"            → "Paper {title} presented at {venue}"
+   *      status === "accepted"            → "Paper {title} accepted by {venue}"
+   *      role === "coauthor"              → "Co-authored paper {title} published in {venue}"
+   *      default (journal first author)   → "Paper {title} published in {venue}"
+   *    Talks   — every entry with month-precision date emits "Oral presentation".
    *    Patents — `number` starts with "ZL"/"CN" + digits → "granted",
    *              otherwise placeholder → "filed".
    *    Honors  — kind === "selected" → "入选/Selected for", else "获/Awarded".

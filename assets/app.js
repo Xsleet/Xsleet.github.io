@@ -148,17 +148,20 @@
     const hasMonth = (d) => typeof d === 'string' && /^\d{4}-\d{2}/.test(d);
     const ymd = (d) => d.slice(0, 7);  // normalize to YYYY-MM for sorting
 
-    // Conference papers are skipped here — talks come from `data.talks` below.
+    // Papers and talks are independent events: a conference can have both
+    // a paper (here) and a talk (from `data.talks` below). No deduplication.
     data.publications.forEach(p => {
       if (!hasMonth(p.date)) return;
-      if (p.type === 'conference') return;
       const title = p.shortTitle || p.title;
-      let templ, tag;
-      if (p.status === 'accepted')        { templ = tpl.paperAccepted;  tag = 'paper'; }
-      else if (p.role === 'coauthor')     { templ = tpl.paperCoauthor;  tag = 'paper'; }
-      else                                { templ = tpl.paperPublished; tag = 'paper'; }
+      const isConf = p.type === 'conference';
+      let templ;
+      if (isConf && p.role === 'coauthor') templ = tpl.paperConferenceCoauthor;
+      else if (isConf)                     templ = tpl.paperConference;
+      else if (p.status === 'accepted')    templ = tpl.paperAccepted;
+      else if (p.role === 'coauthor')      templ = tpl.paperCoauthor;
+      else                                  templ = tpl.paperPublished;
       const text = fmt(templ, { title, venue: p.venue });
-      items.push({ date: ymd(p.date), tag, link: `pub-${p.key}`, en: text.en, cn: text.cn });
+      items.push({ date: ymd(p.date), tag: 'paper', link: `pub-${p.key}`, en: text.en, cn: text.cn });
     });
 
     // Talks — each entry in `data.talks` becomes a "talk" news item.
