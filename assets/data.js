@@ -104,6 +104,7 @@ window.SITE_DATA = {
                    cn: "施闯 中国科学院院士" },
     email: "xueyu@buaa.edu.cn",
     github: "https://github.com/Xsleet",
+    orcid:  "https://orcid.org/0009-0002-3674-2092",
     bio: {
       en: "I am a Ph.D. student committed to advancing satellite spatiotemporal services towards being more <em>precise</em>, <em>autonomous</em>, and <em>trustworthy</em>. My research focuses on the timescale construction for Low Earth Orbit (LEO) and BeiDou Navigation Satellite System (BDS) constellations, as well as high-precision and highly trustworthy BeiDou PNT (Positioning, Navigation, and Timing).",
       cn: "本人致力于推动卫星时空服务向更<em>高精</em>、更<em>自主</em>、更<em>可信</em>迈进。研究方向聚焦于低轨/北斗导航星座时间基准构建与北斗高精度高可信定位导航授时。"
