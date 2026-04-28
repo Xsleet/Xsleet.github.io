@@ -14,6 +14,12 @@
 
 window.SITE_DATA = {
 
+  /* ----------  Publishing Metadata  ---------- */
+  meta: {
+    siteUrl: "https://xsleet.github.io/",
+    lastUpdated: "2026-04-28"
+  },
+
   /* ----------  UI Labels (i18n)  ---------- */
   ui: {
     nav: {
@@ -37,15 +43,32 @@ window.SITE_DATA = {
     pubs: {
       year:      { en: "Year",            cn: "年份"        },
       role:      { en: "Role",            cn: "署名"        },
+      search:    { en: "Search",          cn: "搜索"        },
+      searchPlaceholder: { en: "Search papers, authors, venues, or keywords",
+                           cn: "搜索论文、作者、期刊或关键词" },
+      clear:     { en: "Clear",           cn: "清除"        },
       all:       { en: "All",             cn: "全部"        },
       first:     { en: "1st Author",      cn: "第一作者"    },
       corr:      { en: "Corresponding",   cn: "通信作者"    },
       sFirst:    { en: "Student 1st",     cn: "学生一作"    },
       coauthor:  { en: "Co-author",       cn: "合作作者"    },
       paper:     { en: "Paper",           cn: "原文"        },
+      open:      { en: "Paper",           cn: "原文"        },
       doi:       { en: "DOI",             cn: "DOI"         },
       bibtex:    { en: "BibTeX",          cn: "BibTeX"      },
-      abstract:  { en: "Abstract.",       cn: "摘要："      }
+      abstract:  { en: "Abstract.",       cn: "摘要："      },
+      count:     { en: "{shown} of {total} publications", cn: "显示 {shown} / {total} 篇论文" },
+      none:      { en: "No publications match the current filters.", cn: "没有符合当前筛选条件的论文。" }
+    },
+    overview: {
+      title:     { en: "Research Snapshot", cn: "研究概览" },
+      subtitle:  { en: "Satellite time, trustworthy PNT, and precision metrology",
+                   cn: "卫星时间、可信 PNT 与精密计量" },
+      pubs:      { en: "Publications", cn: "论文" },
+      patents:   { en: "Patents",      cn: "专利" },
+      talks:     { en: "Talks",        cn: "报告" },
+      honors:    { en: "Honors",       cn: "荣誉" },
+      focus:     { en: "Current focus", cn: "当前聚焦" }
     },
     research: {
       relPubs:   { en: "Related Publications", cn: "相关论文"    },
@@ -92,6 +115,8 @@ window.SITE_DATA = {
       lastUpd:   { en: "Last updated",    cn: "最后更新"  },
       copied:    { en: "BibTeX copied ✓", cn: "BibTeX 已复制 ✓" },
       copyFail:  { en: "Copy failed",     cn: "复制失败"        },
+      skip:      { en: "Skip to main content", cn: "跳转到正文" },
+      cv:        { en: "CV",              cn: "简历"            },
       themeAria: { en: "Toggle theme",    cn: "切换主题"        },
       langAria:  { en: "Toggle language", cn: "切换语言"        }
     }
@@ -111,6 +136,7 @@ window.SITE_DATA = {
     email: "xueyu@buaa.edu.cn",
     github: "https://github.com/Xsleet",
     orcid:  "https://orcid.org/0009-0002-3674-2092",
+    cvUrl: "",
     bio: {
       en: "I am a Ph.D. student committed to advancing satellite spatiotemporal services towards being more <em>precise</em>, <em>autonomous</em>, and <em>trustworthy</em>. My research focuses on the timescale construction for Low Earth Orbit (LEO) and BeiDou Navigation Satellite System (BDS) constellations, as well as high-precision and highly trustworthy BeiDou PNT (Positioning, Navigation, and Timing).",
       cn: "本人致力于推动卫星时空服务向更<em>高精</em>、更<em>自主</em>、更<em>可信</em>迈进。研究方向聚焦于低轨/北斗导航星座时间基准构建与北斗高精度高可信定位导航授时。"

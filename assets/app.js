@@ -43,6 +43,45 @@
   };
   const q = sel => document.querySelector(sel);
   const qa = sel => document.querySelectorAll(sel);
+  const normalize = (val) => String(val || '').toLowerCase();
+  const stripHtml = (val) => String(val || '').replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+
+  function setMeta(selector, attr, value) {
+    const node = q(selector);
+    if (node && value) node.setAttribute(attr, value);
+  }
+
+  function onKeyboardActivate(node, handler) {
+    node.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Enter' || ev.key === ' ') {
+        ev.preventDefault();
+        handler(ev);
+      }
+    });
+  }
+
+  function setExpanded(item, expanded) {
+    item.classList.toggle('expanded', expanded);
+    const toggle = item.querySelector('[aria-expanded]');
+    if (toggle) toggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+  }
+
+  function scrollAndHighlight(targetId) {
+    const target = document.getElementById(targetId);
+    if (!target) return;
+
+    const section = target.closest('section.reveal');
+    if (section) section.classList.add('visible');
+
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    target.classList.remove('highlight-target');
+    void target.offsetWidth;
+    target.classList.add('highlight-target');
+
+    if (target.classList.contains('patent-item') || target.classList.contains('pub-item')) {
+      setExpanded(target, true);
+    }
+  }
 
   /* ---------- i18n ---------- */
   let LANG = localStorage.getItem('lang') ||
@@ -92,6 +131,44 @@
     });
   }
 
+  /* ---------- Render: SEO metadata ---------- */
+  function renderSeoMetadata() {
+    const p = data.profile;
+    const siteUrl = data.meta?.siteUrl || 'https://xsleet.github.io/';
+    const title = `${p.nameEn} · ${p.nameCn} — ${t(p.affiliation)}`;
+    const description = stripHtml(t(p.bio));
+    const imageUrl = new URL(p.photo, siteUrl).href;
+
+    document.title = title;
+    setMeta('meta[name="description"]', 'content', description);
+    setMeta('meta[property="og:title"]', 'content', title);
+    setMeta('meta[property="og:description"]', 'content', description);
+    setMeta('meta[property="og:url"]', 'content', siteUrl);
+    setMeta('meta[property="og:image"]', 'content', imageUrl);
+    setMeta('meta[name="twitter:title"]', 'content', title);
+    setMeta('meta[name="twitter:description"]', 'content', description);
+
+    const schema = {
+      '@context': 'https://schema.org',
+      '@type': 'Person',
+      name: p.nameEn,
+      alternateName: p.nameCn,
+      url: siteUrl,
+      image: imageUrl,
+      email: p.email,
+      jobTitle: t(p.position),
+      affiliation: {
+        '@type': 'CollegeOrUniversity',
+        name: t(p.affiliation)
+      },
+      description,
+      sameAs: [p.github, p.orcid, p.scholar].filter(Boolean),
+      knowsAbout: data.research.map(r => stripHtml(t(r.title)))
+    };
+    const schemaNode = q('#person-schema');
+    if (schemaNode) schemaNode.textContent = JSON.stringify(schema);
+  }
+
   /* ---------- Render: Sidebar ---------- */
   function renderSidebar() {
     const p = data.profile;
@@ -112,7 +189,7 @@
     const add = (href, icon, label) => {
       const a = document.createElement('a');
       a.href = href;
-      if (href.startsWith('http')) { a.target = '_blank'; a.rel = 'noopener'; }
+      if (href.startsWith('http')) { a.target = '_blank'; a.rel = 'noopener noreferrer'; }
       a.innerHTML = `${icon}<span>${label}</span>`;
       c.appendChild(a);
     };
@@ -120,6 +197,31 @@
     add(p.github, ICON.github, 'GitHub');
     if (p.orcid)   add(p.orcid,   ICON.orcid,   'ORCID');
     if (p.scholar) add(p.scholar, ICON.scholar, 'Google Scholar');
+    if (p.cvUrl)   add(p.cvUrl,   ICON.link,    t('common.cv'));
+  }
+
+  /* ---------- Render: Sidebar Stats ---------- */
+  function renderSidebarStats() {
+    const wrap = q('#profile-stats');
+    if (!wrap) return;
+
+    const stats = [
+      { value: data.publications.length, label: t('overview.pubs') },
+      { value: data.patents.length, label: t('overview.patents') },
+      { value: data.talks.length, label: t('overview.talks') },
+      { value: data.honors.length, label: t('overview.honors') }
+    ];
+
+    wrap.innerHTML = `
+      <div class="sidebar-stats-title">${t('overview.title')}</div>
+      <div class="sidebar-stat-list" aria-label="${t('overview.title')}">
+        ${stats.map(s => `
+          <div class="sidebar-stat-row">
+            <span class="sidebar-stat-value">${s.value}</span>
+            <span class="sidebar-stat-label">${s.label}</span>
+          </div>`).join('')}
+      </div>
+    `;
   }
 
   /* ---------- Build: News (auto-derived from publications + talks + patents + honors) ---------- */
@@ -207,13 +309,14 @@
   /* ---------- Render: News ---------- */
   function renderNews() {
     const list = q('#news-list');
-    const items = buildNews();
-    const SHOW = 10;
+    const NEWS_COLLAPSED_LIMIT = 5;
+    const NEWS_EXPANDED_LIMIT = 10;
+    const newsItems = buildNews().slice(0, NEWS_EXPANDED_LIMIT);
     let expanded = false;
 
     const paint = (n) => {
       list.innerHTML = '';
-      items.slice(0, n).forEach(it => {
+      newsItems.slice(0, n).forEach(it => {
         const linked = !!it.link;
         const row = el('div', 'news-item' + (linked ? ' is-linked' : ''));
         if (linked) row.dataset.target = it.link;
@@ -240,10 +343,10 @@
         });
       });
     };
-    paint(SHOW);
+    paint(NEWS_COLLAPSED_LIMIT);
 
     let btn = q('#news-toggle');
-    if (items.length <= SHOW) { btn.style.display = 'none'; return; }
+    if (newsItems.length <= NEWS_COLLAPSED_LIMIT) { btn.style.display = 'none'; return; }
     btn.style.display = '';
     const newBtn = btn.cloneNode(true);
     btn.parentNode.replaceChild(newBtn, btn);
@@ -251,12 +354,12 @@
 
     const setBtn = () => {
       const tpl = expanded ? data.ui.news.showFewer : data.ui.news.showAll;
-      btn.textContent = (tpl[LANG] || tpl.en).replace('{n}', items.length);
+      btn.textContent = (tpl[LANG] || tpl.en).replace('{n}', newsItems.length);
     };
     setBtn();
     btn.addEventListener('click', () => {
       expanded = !expanded;
-      paint(expanded ? items.length : SHOW);
+      paint(expanded ? newsItems.length : NEWS_COLLAPSED_LIMIT);
       setBtn();
     });
   }
@@ -305,7 +408,7 @@
         <div class="research-links-block">
           <div class="research-links-label">${t('research.relPubs')} · ${relPubs.length}</div>
           ${relPubs.map(p => `
-            <a class="related-item" data-target="pub-${p.key}">
+            <a class="related-item" href="#pub-${p.key}" data-target="pub-${p.key}">
               <span class="yr">${p.year}</span>
               <span>${p.shortTitle || p.title}<span class="arrow">→</span></span>
             </a>`).join('')}
@@ -315,7 +418,7 @@
         <div class="research-links-block">
           <div class="research-links-label">${t('research.relPatents')} · ${relPatents.length}</div>
           ${relPatents.map(p => `
-            <a class="related-item" data-target="patent-${p.key}">
+            <a class="related-item" href="#patent-${p.key}" data-target="patent-${p.key}">
               <span class="yr">${(p.date || '').slice(0, 4) || p.date}</span>
               <span>${t(p.title)}<span class="arrow">→</span></span>
             </a>`).join('')}
@@ -340,19 +443,7 @@
       c.querySelectorAll('.related-item').forEach(link => {
         link.addEventListener('click', (ev) => {
           ev.preventDefault();
-          const targetId = link.dataset.target;
-          const target = document.getElementById(targetId);
-          if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            // Brief highlight flash
-            target.classList.remove('highlight-target');
-            void target.offsetWidth; // restart animation
-            target.classList.add('highlight-target');
-            // Auto-expand abstract if it's a patent or publication with abstract
-            if (target.classList.contains('patent-item') || target.classList.contains('pub-item')) {
-              target.classList.add('expanded');
-            }
-          }
+          scrollAndHighlight(link.dataset.target);
         });
       });
 
@@ -376,11 +467,30 @@
   }
 
   /* ---------- Render: Publications ---------- */
-  let currentFilter = { year: 'all', role: 'all' };
+  let currentFilter = { year: 'all', role: 'all', query: '' };
 
   function renderPublications() {
     const wrap = q('#pub-list');
     wrap.innerHTML = '';
+
+    const input = q('#pub-search');
+    const clear = q('#pub-clear');
+    if (input) {
+      input.placeholder = t('pubs.searchPlaceholder');
+      input.value = currentFilter.query;
+      input.oninput = () => {
+        currentFilter.query = input.value.trim().toLowerCase();
+        applyFilter();
+      };
+    }
+    if (clear) {
+      clear.onclick = () => {
+        currentFilter.query = '';
+        if (input) input.value = '';
+        applyFilter();
+        input?.focus();
+      };
+    }
 
     const years = [...new Set(data.publications.map(p => p.year))].sort((a, b) => b - a);
     buildFilter('#pub-filter-year', ['all', ...years.map(String)], 'year');
@@ -392,6 +502,18 @@
       item.dataset.year = p.year;
       item.dataset.role = p.role;
       item.dataset.type = p.type;
+      item.dataset.search = normalize([
+        p.title,
+        p.shortTitle,
+        p.venue,
+        p.year,
+        p.type,
+        p.role,
+        p.doi,
+        p.abstract,
+        ...(p.authors || []),
+        ...(p.badges || [])
+      ].filter(Boolean).join(' '));
 
       const PUBLISHER_RE = /^(IEEE|IOP|Springer|Elsevier|Wiley|Nature|Taylor|MDPI|ACM|AGU|AIP|RSC|SPIE)$/i;
       const badgesHtml = (p.badges || []).filter(b => !PUBLISHER_RE.test(b)).map(b => {
@@ -407,28 +529,32 @@
         const isMe = a.replace('*', '').trim() === 'Yu Xue';
         return isMe ? `<span class="me">${a}</span>` : a;
       }).join(', ');
+      const abstractId = `abstract-${p.key}`;
 
       item.innerHTML = `
-        <div class="pub-head">
+        <div class="pub-head"${p.abstract ? ` role="button" tabindex="0" aria-expanded="false" aria-controls="${abstractId}"` : ''}>
           <div class="pub-head-text">
             <span class="pub-year-badge">${fmtMonth(p.date) || p.year}</span>
             <span class="pub-title">${p.title}</span>
           </div>
-          ${p.abstract ? `<div class="pub-toggle" aria-label="${t('pubs.abstract')}">${ICON.chevron}</div>` : ''}
+          ${p.abstract ? `<div class="pub-toggle" aria-hidden="true">${ICON.chevron}</div>` : ''}
         </div>
         <div class="pub-meta">${authorsStr}. <em>${p.venue}</em>${p.volume ? `, ${p.volume}` : ''}.
           <span class="pub-badges">${badgesHtml}</span>
         </div>
         <div class="pub-actions">
-          ${p.doi ? `<a class="pub-action" href="https://doi.org/${p.doi}" target="_blank" rel="noopener">${ICON.doi} ${t('pubs.doi')}</a>` : ''}
+          ${p.url ? `<a class="pub-action" href="${p.url}" target="_blank" rel="noopener noreferrer">${ICON.link} ${t('pubs.open')}</a>` : ''}
+          ${p.doi ? `<a class="pub-action" href="https://doi.org/${p.doi}" target="_blank" rel="noopener noreferrer">${ICON.doi} ${t('pubs.doi')}</a>` : ''}
           <button class="pub-action pub-bibtex" data-key="${p.key}">${ICON.copy} ${t('pubs.bibtex')}</button>
         </div>
-        ${p.abstract ? `<div class="pub-abstract"><strong>${t('pubs.abstract')}</strong> ${p.abstract}</div>` : ''}
+        ${p.abstract ? `<div class="pub-abstract" id="${abstractId}"><strong>${t('pubs.abstract')}</strong> ${p.abstract}</div>` : ''}
       `;
 
       const headEl = item.querySelector('.pub-head');
       if (p.abstract) {
-        headEl.addEventListener('click', () => item.classList.toggle('expanded'));
+        const toggle = () => setExpanded(item, !item.classList.contains('expanded'));
+        headEl.addEventListener('click', toggle);
+        onKeyboardActivate(headEl, toggle);
       }
 
       const bibBtn = item.querySelector('.pub-bibtex');
@@ -447,6 +573,9 @@
 
       wrap.appendChild(item);
     });
+    const empty = el('div', 'pub-empty', t('pubs.none'));
+    empty.id = 'pub-empty';
+    wrap.appendChild(empty);
     applyFilter();
   }
 
@@ -478,11 +607,26 @@
   }
 
   function applyFilter() {
+    let shown = 0;
     qa('.pub-item').forEach(it => {
       const yMatch = currentFilter.year === 'all' || it.dataset.year === currentFilter.year;
       const rMatch = currentFilter.role === 'all' || it.dataset.role === currentFilter.role;
-      it.classList.toggle('hidden', !(yMatch && rMatch));
+      const qMatch = !currentFilter.query || it.dataset.search.includes(currentFilter.query);
+      const visible = yMatch && rMatch && qMatch;
+      it.classList.toggle('hidden', !visible);
+      if (visible) shown += 1;
     });
+    const total = data.publications.length;
+    const count = q('#pub-result-count');
+    if (count) {
+      count.textContent = t('pubs.count')
+        .replace('{shown}', String(shown))
+        .replace('{total}', String(total));
+    }
+    const clear = q('#pub-clear');
+    if (clear) clear.hidden = !currentFilter.query;
+    const empty = q('#pub-empty');
+    if (empty) empty.hidden = shown !== 0;
   }
 
   /* ---------- Render: Patents (single column, click to expand) ---------- */
@@ -490,29 +634,40 @@
     const wrap = q('#patent-list');
     wrap.innerHTML = '';
     data.patents.forEach(p => {
-      const it = el('article', 'patent-item');
+      const it = el('article', 'patent-item patent-dossier');
       it.id = `patent-${p.key}`;
+      const abstractId = `patent-abstract-${p.key}`;
+      const month = fmtMonth(p.date) || p.date;
+      const [year = month, monthPart = ''] = month.split('-');
+      const inventors = p.inventors.map(t).join(', ');
       it.innerHTML = `
-        <div class="patent-head">
+        <div class="patent-head"${p.abstract ? ` role="button" tabindex="0" aria-expanded="false" aria-controls="${abstractId}"` : ''}>
+          <div class="patent-date-mark" aria-label="${month}">
+            <span class="patent-date-year">${year}</span>
+            ${monthPart ? `<span class="patent-date-month">${monthPart}</span>` : ''}
+          </div>
           <div class="patent-head-text">
             <div class="patent-title">${t(p.title)}</div>
             <div class="patent-meta">
-              <span class="yr">${fmtMonth(p.date) || p.date}</span>
-              <span class="num">${p.number}</span>
-              · ${p.inventors.map(t).join(', ')}
+              <span class="patent-number-chip">${p.number}</span>
+              <span class="patent-inventors">${inventors}</span>
             </div>
           </div>
-          <div class="patent-toggle">${ICON.chevron}</div>
+          <div class="patent-toggle" aria-hidden="true">${ICON.chevron}</div>
         </div>
         ${p.abstract ? `
-          <div class="patent-abstract">
-            <div class="patent-abstract-label">${t('patents.abstract')}</div>
-            ${t(p.abstract)}
+          <div class="patent-abstract" id="${abstractId}">
+            <div class="patent-abstract-panel">
+              <div class="patent-abstract-label">${t('patents.abstract')}</div>
+              <p>${t(p.abstract)}</p>
+            </div>
           </div>` : ''}
       `;
       const head = it.querySelector('.patent-head');
       if (p.abstract) {
-        head.addEventListener('click', () => it.classList.toggle('expanded'));
+        const toggle = () => setExpanded(it, !it.classList.contains('expanded'));
+        head.addEventListener('click', toggle);
+        onKeyboardActivate(head, toggle);
       } else {
         head.style.cursor = 'default';
         const tg = it.querySelector('.patent-toggle');
@@ -574,6 +729,8 @@
       el.textContent = t(el.getAttribute('data-i18n'));
     });
     document.documentElement.setAttribute('lang', LANG === 'cn' ? 'zh-CN' : 'en');
+    q('#skip-link').textContent = t('common.skip');
+    q('#last-updated').textContent = data.meta?.lastUpdated || '';
     q('#lang-toggle').textContent = LANG === 'cn' ? 'EN' : '中';
     q('#lang-toggle').setAttribute('aria-label', t('common.langAria'));
     q('#theme-toggle').setAttribute('aria-label', t('common.themeAria'));
@@ -631,19 +788,65 @@
   /* ---------- Reveal on scroll ---------- */
   function initReveal() {
     const items = qa('.reveal');
+    if (!('IntersectionObserver' in window)) {
+      items.forEach(i => i.classList.add('visible'));
+      return;
+    }
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
       });
     }, { threshold: 0.05 });
-    items.forEach(i => io.observe(i));
+    items.forEach((i, idx) => {
+      i.style.setProperty('--reveal-delay', `${Math.min(idx * 45, 240)}ms`);
+      io.observe(i);
+    });
+  }
+
+  function restoreHashTarget() {
+    if (!window.location.hash) return;
+    const targetId = decodeURIComponent(window.location.hash.slice(1));
+    const target = document.getElementById(targetId);
+    if (!target) return;
+    const section = target.closest('section.reveal') || target;
+    if (section.classList?.contains('reveal')) section.classList.add('visible');
+    if (target.classList.contains('pub-item') || target.classList.contains('patent-item')) {
+      setExpanded(target, true);
+    }
+    const scrollTarget = () => {
+      const y = target.getBoundingClientRect().top + window.scrollY - 88;
+      const top = Math.max(0, y);
+      const previousScrollBehavior = document.documentElement.style.scrollBehavior;
+      document.documentElement.style.scrollBehavior = 'auto';
+      window.scrollTo(0, top);
+      document.documentElement.scrollTop = top;
+      document.body.scrollTop = top;
+      document.documentElement.style.scrollBehavior = previousScrollBehavior;
+    };
+    scrollTarget();
+    requestAnimationFrame(scrollTarget);
+    window.setTimeout(scrollTarget, 80);
+    window.setTimeout(scrollTarget, 320);
+  }
+
+  function scheduleHashRestore() {
+    if (!window.location.hash) return;
+    let attempts = 0;
+    const tick = () => {
+      restoreHashTarget();
+      attempts += 1;
+      if (attempts < 8) window.setTimeout(tick, attempts < 3 ? 60 : 180);
+    };
+    tick();
   }
 
   /* ---------- Render All ---------- */
   function renderAll() {
     applyStaticI18n();
+    renderSeoMetadata();
     renderNav();
     renderSidebar();
+    renderSidebarStats();
     renderNews();
     renderEdu();
     renderResearch();
@@ -660,6 +863,9 @@
     renderAll();
     initScrollSpy();
     initReveal();
+    scheduleHashRestore();
+    window.addEventListener('load', scheduleHashRestore);
+    window.addEventListener('hashchange', scheduleHashRestore);
   });
 
 })();

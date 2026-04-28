@@ -6,14 +6,25 @@
   <title>Yu Xue · 薛宇 — Beihang University</title>
   <meta name="description" content="Yu Xue (薛宇) — Ph.D. Candidate at Beihang University. Research on GNSS integrity monitoring, LEO constellation timescale, and precise time metrology." />
   <meta name="author" content="Yu Xue" />
+  <link rel="canonical" href="https://xsleet.github.io/" />
+  <meta property="og:type" content="profile" />
+  <meta property="og:title" content="Yu Xue · 薛宇 — Beihang University" />
+  <meta property="og:description" content="Ph.D. Candidate at Beihang University researching GNSS integrity monitoring, LEO constellation timescale, and precise time metrology." />
+  <meta property="og:url" content="https://xsleet.github.io/" />
+  <meta property="og:image" content="https://xsleet.github.io/assets/photo.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Yu Xue · 薛宇 — Beihang University" />
+  <meta name="twitter:description" content="Research on GNSS integrity monitoring, LEO constellation timescale, and precise time metrology." />
 
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛰️%3C/text%3E%3C/svg%3E" />
   <link rel="stylesheet" href="assets/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script type="application/ld+json" id="person-schema">{}</script>
 </head>
 <body>
+<a class="skip-link" href="#main-content" id="skip-link">Skip to main content</a>
 
 <!-- =========================  TOP NAV  ========================= -->
 <nav class="nav">
@@ -62,13 +73,15 @@
 
     <div class="sidebar-bio" id="profile-bio"></div>
 
+    <div class="sidebar-stats" id="profile-stats"></div>
+
     <div class="sidebar-divider"></div>
 
     <div class="sidebar-contact" id="profile-contact"></div>
   </aside>
 
   <!-- ===== Main Content ===== -->
-  <main class="main-content">
+  <main class="main-content" id="main-content">
 
     <!-- News -->
     <section id="news" class="reveal">
@@ -92,6 +105,14 @@
     <!-- Publications -->
     <section id="publications" class="reveal">
       <h2 class="section-title"><span class="hash">#</span> <span data-i18n="section.pubs"></span></h2>
+      <div class="pub-searchbar">
+        <label class="pub-search" for="pub-search">
+          <span class="pub-search-label" data-i18n="pubs.search"></span>
+          <input id="pub-search" type="search" autocomplete="off" />
+        </label>
+        <button class="pub-clear-btn" id="pub-clear" type="button" data-i18n="pubs.clear"></button>
+        <span class="pub-result-count" id="pub-result-count"></span>
+      </div>
       <div class="pub-filter">
         <div class="filter-group">
           <span class="filter-group-label" data-i18n="pubs.year"></span>
@@ -125,7 +146,7 @@
 
     <footer class="footer">
       <span data-i18n="common.lastUpd"></span>:
-      <script>document.write(new Date().toISOString().slice(0,10))</script>
+      <span id="last-updated"></span>
       &nbsp;·&nbsp; © 2026 Yu Xue
     </footer>
 
