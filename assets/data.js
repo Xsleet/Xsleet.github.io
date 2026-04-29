@@ -68,6 +68,18 @@ window.SITE_DATA = {
       patents:   { en: "Patents",      cn: "专利" },
       talks:     { en: "Talks",        cn: "报告" },
       honors:    { en: "Honors",       cn: "荣誉" },
+      pubsTitle: { en: "Published papers", cn: "发表论文" },
+      patentsTitle: { en: "Granted patents", cn: "授权专利" },
+      talksTitle: { en: "Technical talks", cn: "技术报告" },
+      honorsTitle: { en: "Honors & awards", cn: "荣誉奖项" },
+      pubsShort: { en: "Papers", cn: "论文" },
+      patentsShort: { en: "Patents", cn: "专利" },
+      talksShort: { en: "Talks", cn: "报告" },
+      honorsShort: { en: "Honors", cn: "荣誉" },
+      pubsUnit: { en: "", cn: "篇" },
+      patentsUnit: { en: "", cn: "项" },
+      talksUnit: { en: "", cn: "份" },
+      honorsUnit: { en: "", cn: "项" },
       focus:     { en: "Current focus", cn: "当前聚焦" }
     },
     research: {
@@ -75,6 +87,7 @@ window.SITE_DATA = {
       relPatents:{ en: "Related Patents",      cn: "相关专利"    }
     },
     patents: {
+      date:      { en: "Granted",        cn: "授权日期"    },
       number:    { en: "Patent No.",      cn: "专利号"      },
       inventors: { en: "Inventors",       cn: "发明人"      },
       abstract:  { en: "Abstract",        cn: "摘要"        },

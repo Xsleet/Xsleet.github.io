@@ -19,6 +19,11 @@
     copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',
     chevron: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>',
     shield: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>',
+    patent: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/><path d="M14 3v5h5"/><path d="M9 11h4"/><path d="M9 14h3"/><path d="m16.4 12.5.55 1.1 1.22.18-.88.86.21 1.21-1.1-.58-1.09.58.2-1.21-.87-.86 1.21-.18.55-1.1Z"/></svg>',
+    statPaper: '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3.25 9.25 12 4.75l8.75 4.5L12 13.75 3.25 9.25Z" fill="currentColor"/><path d="M7.35 11.55v3.65c1.25 1.12 2.86 1.72 4.65 1.72s3.4-.6 4.65-1.72v-3.65" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M20.25 9.7v4.25" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><circle cx="20.25" cy="15.55" r=".9" fill="currentColor"/></svg>',
+    statPatent: '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7.2 3.75h7.15l3.45 3.45v12.05c0 .55-.45 1-1 1H7.2c-.55 0-1-.45-1-1V4.75c0-.55.45-1 1-1Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.15 3.9v3.65h3.55" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9.25 10.6h4.1M9.25 13.35h3.05" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M16.2 12.7 17 14.3l1.75.25-1.28 1.24.3 1.75-1.57-.83-1.57.83.3-1.75-1.28-1.24 1.75-.25.8-1.6Z" fill="currentColor"/></svg>',
+    statReport: '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5.2 7.2h5.15l1.5 1.72h6.95v9.78c0 .6-.5 1.1-1.1 1.1H6.3c-.6 0-1.1-.5-1.1-1.1V7.2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.15 12.15h6.7M8.15 15.35h4.85" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+    statHonor: '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8.25 5h7.5v3.95a3.75 3.75 0 0 1-7.5 0V5Z" fill="currentColor"/><path d="M8.25 7H5.95a2.35 2.35 0 0 0 0 4.7H8.4M15.75 7h2.3a2.35 2.35 0 0 1 0 4.7H15.6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M12 12.9v4.05M8.8 20h6.4M10.1 17h3.8" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"/><path d="m12 6.75.45.9.99.15-.72.7.17.99L12 9.02l-.89.47.17-.99-.72-.7.99-.15.45-.9Z" fill="white"/></svg>',
     satellite: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 7 9 3 5 7l4 4"/><path d="m17 11 4 4-4 4-4-4"/><path d="m8 12 4 4"/><path d="m16 8 3-3"/><path d="M9 21a6 6 0 0 0-6-6"/></svg>',
     clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>',
     sun: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>',
@@ -206,19 +211,49 @@
     if (!wrap) return;
 
     const stats = [
-      { value: data.publications.length, label: t('overview.pubs') },
-      { value: data.patents.length, label: t('overview.patents') },
-      { value: data.talks.length, label: t('overview.talks') },
-      { value: data.honors.length, label: t('overview.honors') }
+      {
+        value: data.publications.length,
+        label: t('overview.pubsShort'),
+        unit: t('overview.pubsUnit'),
+        icon: ICON.statPaper,
+        tone: 'blue'
+      },
+      {
+        value: data.patents.length,
+        label: t('overview.patentsShort'),
+        unit: t('overview.patentsUnit'),
+        icon: ICON.statPatent,
+        tone: 'green'
+      },
+      {
+        value: data.talks.length,
+        label: t('overview.talksShort'),
+        unit: t('overview.talksUnit'),
+        icon: ICON.statReport,
+        tone: 'amber'
+      },
+      {
+        value: data.honors.length,
+        label: t('overview.honorsShort'),
+        unit: t('overview.honorsUnit'),
+        icon: ICON.statHonor,
+        tone: 'violet'
+      }
     ];
 
     wrap.innerHTML = `
-      <div class="sidebar-stats-title">${t('overview.title')}</div>
-      <div class="sidebar-stat-list" aria-label="${t('overview.title')}">
+      <div class="sidebar-stat-grid" aria-label="${t('overview.title')}">
         ${stats.map(s => `
-          <div class="sidebar-stat-row">
-            <span class="sidebar-stat-value">${s.value}</span>
-            <span class="sidebar-stat-label">${s.label}</span>
+          <div class="sidebar-stat-card stat-tone-${s.tone}">
+            <span class="sidebar-stat-icon" aria-hidden="true">${s.icon}</span>
+            <span class="sidebar-stat-divider" aria-hidden="true"></span>
+            <span class="sidebar-stat-content">
+              <span class="sidebar-stat-main">
+                <span class="sidebar-stat-value">${s.value}</span>
+                ${s.unit ? `<span class="sidebar-stat-unit">${s.unit}</span>` : ''}
+              </span>
+              <span class="sidebar-stat-label">${s.label}</span>
+            </span>
           </div>`).join('')}
       </div>
     `;
@@ -638,19 +673,25 @@
       it.id = `patent-${p.key}`;
       const abstractId = `patent-abstract-${p.key}`;
       const month = fmtMonth(p.date) || p.date;
-      const [year = month, monthPart = ''] = month.split('-');
+      const displayDate = month.replace('-', '.');
       const inventors = p.inventors.map(t).join(', ');
       it.innerHTML = `
         <div class="patent-head"${p.abstract ? ` role="button" tabindex="0" aria-expanded="false" aria-controls="${abstractId}"` : ''}>
-          <div class="patent-date-mark" aria-label="${month}">
-            <span class="patent-date-year">${year}</span>
-            ${monthPart ? `<span class="patent-date-month">${monthPart}</span>` : ''}
+          <div class="patent-date-badge">
+            <span class="patent-meta-label">${t('patents.date')}</span>
+            <span class="patent-date-value">${displayDate}</span>
           </div>
           <div class="patent-head-text">
+            <div class="patent-meta-strip">
+              <span class="patent-meta-field patent-number-badge">
+                <span class="patent-meta-label">${t('patents.number')}</span>
+                <span class="patent-meta-value">${p.number}</span>
+              </span>
+            </div>
             <div class="patent-title">${t(p.title)}</div>
-            <div class="patent-meta">
-              <span class="patent-number-chip">${p.number}</span>
-              <span class="patent-inventors">${inventors}</span>
+            <div class="patent-inventors">
+              <span class="patent-inventors-label">${t('patents.inventors')}</span>
+              <span>${inventors}</span>
             </div>
           </div>
           <div class="patent-toggle" aria-hidden="true">${ICON.chevron}</div>
