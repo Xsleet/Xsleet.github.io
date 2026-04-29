@@ -106,13 +106,15 @@ test('stylesheet includes visual polish, focus states, mobile overflow guard, an
   assert.match(css, /\.sidebar-stats/);
   assert.match(css, /\.sidebar-stat-grid/);
   assert.match(css, /\.sidebar-stat-card/);
-  assert.match(css, /\.sidebar-stat-card[\s\S]*grid-template-columns:\s*42px 1px minmax\(0,\s*1fr\)/);
+  assert.match(css, /\.sidebar-stat-card[\s\S]*grid-template-columns:\s*38px 1px minmax\(0,\s*1fr\)/);
   assert.match(css, /\.sidebar-stat-icon/);
   assert.match(css, /\.sidebar-stat-icon[\s\S]*justify-content:\s*center/);
   assert.match(css, /\.sidebar-stat-icon svg[\s\S]*display:\s*block/);
   assert.match(css, /\.sidebar-stat-divider/);
   assert.match(css, /\.sidebar-stat-content/);
   assert.match(css, /\.sidebar-stat-value[\s\S]*font-size:\s*1\.82rem/);
+  assert.match(css, /\.sidebar-stat-label[\s\S]*font-size:\s*0\.68rem/);
+  assert.match(css, /\.sidebar-stat-label[\s\S]*white-space:\s*nowrap/);
   assert.doesNotMatch(css, /\.sidebar-stat-note/);
   assert.match(css, /\.stat-tone-blue/);
   assert.doesNotMatch(css, /\.sidebar-stat-card::after/);

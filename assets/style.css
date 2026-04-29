@@ -309,9 +309,9 @@ input:focus-visible,
     0 5px 14px color-mix(in srgb, var(--shadow-color) 11%, transparent);
   overflow: hidden;
   display: grid;
-  grid-template-columns: 42px 1px minmax(0, 1fr);
+  grid-template-columns: 38px 1px minmax(0, 1fr);
   align-items: center;
-  column-gap: 8px;
+  column-gap: 6px;
   transition: border-color var(--transition), background var(--transition), box-shadow var(--transition), transform var(--transition);
 }
 .sidebar-stat-card:hover {
@@ -326,8 +326,8 @@ input:focus-visible,
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   color: var(--stat-color, var(--accent));
   background:
@@ -341,8 +341,8 @@ input:focus-visible,
 }
 .sidebar-stat-icon svg {
   display: block;
-  width: 23px;
-  height: 23px;
+  width: 21px;
+  height: 21px;
   overflow: visible;
 }
 .sidebar-stat-divider {
@@ -384,10 +384,11 @@ input:focus-visible,
 .sidebar-stat-label {
   display: block;
   color: var(--text);
-  font-size: 0.75rem;
+  font-size: 0.68rem;
   font-weight: 850;
   line-height: 1.18;
-  overflow-wrap: anywhere;
+  white-space: nowrap;
+  overflow-wrap: normal;
 }
 .stat-tone-blue { --stat-color: #2563eb; }
 .stat-tone-green { --stat-color: #16a34a; }
@@ -935,18 +936,17 @@ section:last-of-type { padding-bottom: 0; }
   padding: 16px 18px;
   cursor: pointer;
   display: grid;
-  grid-template-columns: 96px minmax(0, 1fr) 44px;
-  gap: 18px;
-  align-items: start;
+  grid-template-columns: minmax(0, 1fr) 44px;
+  gap: 16px;
+  align-items: center;
   user-select: none;
   touch-action: manipulation;
 }
 .patent-date-badge {
-  display: grid;
-  align-content: start;
-  gap: 4px;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 7px;
   min-width: 0;
-  padding-top: 3px;
 }
 .patent-date-value {
   color: var(--text);
@@ -959,7 +959,7 @@ section:last-of-type { padding-bottom: 0; }
 .patent-head-text {
   min-width: 0;
   display: grid;
-  gap: 6px;
+  gap: 7px;
 }
 .patent-meta-strip {
   display: flex;
@@ -999,13 +999,13 @@ section:last-of-type { padding-bottom: 0; }
   border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
 }
 .patent-title {
-  max-width: 760px;
+  max-width: none;
   color: var(--text);
   font-size: 1.02rem;
   font-weight: 760;
   line-height: 1.42;
   margin: 0;
-  text-wrap: balance;
+  text-wrap: pretty;
 }
 .patent-inventors {
   display: flex;
@@ -1316,14 +1316,13 @@ section:last-of-type { padding-bottom: 0; }
     padding: 15px 14px 15px 18px;
   }
   .patent-date-badge {
-    grid-column: 1 / -1;
     display: flex;
     align-items: baseline;
     gap: 8px;
     padding-top: 0;
   }
-  .patent-head-text { grid-column: 1; grid-row: 2; }
-  .patent-toggle { grid-column: 2; grid-row: 2; }
+  .patent-head-text { grid-column: 1; grid-row: 1; }
+  .patent-toggle { grid-column: 2; grid-row: 1; }
   .patent-meta-strip { gap: 6px 8px; }
   .patent-meta-field {
     flex-wrap: wrap;

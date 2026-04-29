@@ -677,12 +677,12 @@
       const inventors = p.inventors.map(t).join(', ');
       it.innerHTML = `
         <div class="patent-head"${p.abstract ? ` role="button" tabindex="0" aria-expanded="false" aria-controls="${abstractId}"` : ''}>
-          <div class="patent-date-badge">
-            <span class="patent-meta-label">${t('patents.date')}</span>
-            <span class="patent-date-value">${displayDate}</span>
-          </div>
           <div class="patent-head-text">
             <div class="patent-meta-strip">
+              <span class="patent-meta-field patent-date-badge">
+                <span class="patent-meta-label">${t('patents.date')}</span>
+                <span class="patent-date-value">${displayDate}</span>
+              </span>
               <span class="patent-meta-field patent-number-badge">
                 <span class="patent-meta-label">${t('patents.number')}</span>
                 <span class="patent-meta-value">${p.number}</span>
